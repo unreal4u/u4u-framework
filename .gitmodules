@@ -1,0 +1,3 @@
+[submodule "app/classes/thirdparty/u4u-classes"]
+	path = app/classes/thirdparty/u4u-classes
+	url = https://github.com/unreal4u/u4u-classes.git
