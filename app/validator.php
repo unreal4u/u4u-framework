@@ -10,7 +10,6 @@
  * Author: Camilo Sperberg - http://unreal4u.com/
  */
 include(dirname(__FILE__).'/config.php');
-include(ROUT.'basics.php');
 include(THIRDPARTY_DIRECTORY.'enabled-thirdparty-extensions.php');
 include(CLASSES.'appContainer.class.php');
 

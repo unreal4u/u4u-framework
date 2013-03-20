@@ -1,5 +1,6 @@
 <?php
 
+use \u4u;
 /**
  * The main application container. This class holds the entire application
  *
@@ -115,7 +116,18 @@ class appContainer {
      * @var boolean
      */
     public $isPublicPage = false;
+
+    /**
+     * Don't remember, fill in later
+     * @var unknown
+     */
     public $development;
+
+    /**
+     * Autoloader and instantiator of u4u classes
+     * @var object
+     */
+    private $u4uAutoLoader = null;
 
     /**
      * Constructor
@@ -137,8 +149,8 @@ class appContainer {
      */
     public function initializeMainObject() {
         $this->includeThirdparty(U4U_CLASSES);
-        $u4u_autoloader = new u4u_autoloader();
-        $this->db       = new db_mysqli();
+        $this->u4uAutoLoader   = new \u4u\autoLoader();
+        $this->db              = $this->u4uAutoLoader->instantiateClass('db_mysqli');
         $this->db->keepLiveLog = true;
 
         $this->initializeSession();
@@ -170,13 +182,13 @@ class appContainer {
      * The basic classes with which this framework works
      */
     private function registerBasicClasses() {
-        $this->cache    = new cacheManager('apc');
+        $this->cache    = $this->u4uAutoLoader->instantiateClass('cacheManager' , array('apc'));
         if (APP_ENVIRONMENT != 'production') {
             //$this->cache->enableDebugMode();
         }
-        $this->he       = new HTMLUtils();
+        $this->he       = $this->u4uAutoLoader->instantiateClass('HTMLUtils');
         $this->misc     = new misc($this->db, $this->he);
-        $this->css      = new csstacker();
+        $this->css      = $this->u4uAutoLoader->instantiateClass('csstacker');
         $this->msgStack = new messageStack();
         $this->bc       = new breadcrump();
         $this->view     = new view();
