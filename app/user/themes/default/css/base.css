@@ -1,0 +1,9 @@
+body{font:11px Arial}
+pre.debug{text-align:left;background:#FFFFC9;color:red;padding:10px 5px;margin:5px 10px;overflow:auto;font:10px Courier}
+
+.center{text-align:center}
+
+#wrapper{width:980px;margin:0 auto}
+#header{background:#DDD}
+#page{background:#CCC}
+#footer{background:#BBB}

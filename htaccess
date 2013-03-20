@@ -1,0 +1,22 @@
+RewriteEngine On
+RewriteBase /~gcl/
+
+RewriteCond %{REQUEST_FILENAME} !-s 
+RewriteCond %{REQUEST_URI} !-d 
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/([^/]+)/?$ index.php?p=$1&a=$2&b=$3&c=$4 [L,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-s 
+RewriteCond %{REQUEST_URI} !-d 
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/?$ index.php?p=$1&a=$2&b=$3 [L,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-s 
+RewriteCond %{REQUEST_URI} !-d 
+RewriteRule ^([^/]+)/([^/]+)/?$ index.php?p=$1&a=$2 [L,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-s 
+RewriteCond %{REQUEST_URI} !-d 
+RewriteRule ^([^/]+)/?$ index.php?p=$1 [L,NC]
+
+ErrorDocument 404 http://192.168.0.8/~gcl/not-found/
+ErrorDocument 403 http://192.168.0.8/~gcl/not-found/
+

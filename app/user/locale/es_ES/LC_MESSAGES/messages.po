@@ -1,0 +1,146 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: framework u4u\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-04 15:45+0100\n"
+"PO-Revision-Date: 2011-11-07 12:15+0100\n"
+"Last-Translator: Camilo Sperberg <me@unreal4u.com>\n"
+"Language-Team: unreal4u\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;gettext;gettext_noop\n"
+"X-Poedit-Basepath: /var/www/html/framework/\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: CHILE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: /var/www/html/framework\n"
+
+#: /var/www/html/framework/inc/handler-errors.php:59
+msgid "We're sorry, but an error happened"
+msgstr "Lo sentimos, pero ocurrió un error"
+
+#: /var/www/html/framework/inc/handler-errors.php:60
+msgid "There's been an internal error that prevents the page from loading correctly."
+msgstr "Ha habido un error interno que evita que la página se cargue de forma adecuada"
+
+#: /var/www/html/framework/inc/handler-errors.php:61
+#, php-format
+msgid "This error has been saved so that an administrator can check it. However, you can write to <a href=\"mailto:%s\">%s</a> to report it."
+msgstr "Este error ha sido salvado para que un administrador lo pueda revisar. Sin embargo, puede escribir a <a href=\"mailto:%s\">%s</a> para reportarlo."
+
+#: /var/www/html/framework/inc/handler-errors.php:62
+msgid "Back to home"
+msgstr "Volver a Inicio"
+
+#: /var/www/html/framework/inc/validator.php:136
+msgid "You don't have access to any option in the menu and you just will have access to the most basic options.<br />If you believe it's a mistake, talk with an administrator."
+msgstr "No tiene acceso a opción alguna en el menú y sólo tendrá acceso a las opciones más básicas del sistema.<br />Si cree que es un error, hable con el administrador."
+
+#: /var/www/html/framework/inc/validator.php:156
+msgid "Access denied"
+msgstr "Acceso Denegado"
+
+#: /var/www/html/framework/inc/pags/admin-grp.php:14
+msgid "Roles Modification"
+msgstr "Modificación de Grupos"
+
+#: /var/www/html/framework/inc/pags/admin.php:3
+msgid "Administration Panel"
+msgstr "Panel de Administración"
+
+#: /var/www/html/framework/inc/pags/admin.php:5
+msgid "Welcome to the administration panel"
+msgstr "Bienvenido al panel de administración"
+
+#: /var/www/html/framework/inc/pags/ajax.php:16
+msgid "Couldn't load ajax request."
+msgstr "No se pudo cargar las opciones"
+
+#: /var/www/html/framework/inc/pags/detalle-trafico.php:14
+msgid "Traffic detail per users"
+msgstr "Detalle de tráfico por usuarios"
+
+#: /var/www/html/framework/inc/pags/index.php:4
+msgid "Main index"
+msgstr "Inicio"
+
+#: /var/www/html/framework/inc/pags/index.php:6
+msgid "Hello world!"
+msgstr "Hola mundo!"
+
+#: /var/www/html/framework/inc/pags/index.php:7
+msgid "Go to login"
+msgstr "Ir a logearse"
+
+#: /var/www/html/framework/inc/pags/login.php:4
+msgid "Login"
+msgstr "Ingresar"
+
+#: /var/www/html/framework/inc/pags/login.php:34
+msgid "User not found or password not equal. Please try again."
+msgstr "Usuario no encontrado o contraseña no coincidente. Por favor intente nuevamente."
+
+#: /var/www/html/framework/inc/pags/login.php:37
+msgid "Password not equal. Please try again."
+msgstr "La contraseña no coincide. Por favor intente nuevamente."
+
+#: /var/www/html/framework/inc/pags/login.php:40
+#, php-format
+msgid "An unknown error happened (%d). Please notify the sysadmin."
+msgstr "Un error desconocido (%d) ocurrió. Por favor notifique al administrador de sistemas."
+
+#: /var/www/html/framework/inc/pags/login.php:49
+msgid "Please enter your credentials to continue."
+msgstr "Por favor ingrese sus datos para continuar."
+
+#: /var/www/html/framework/inc/pags/login.php:52
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: /var/www/html/framework/inc/pags/login.php:52
+msgid "Password"
+msgstr "Contraseña"
+
+#: /var/www/html/framework/inc/pags/login.php:52
+msgid "Enter"
+msgstr "Entrar"
+
+#: /var/www/html/framework/inc/themes/default/footer.php:4
+msgid "This is the footer. You can edit this at inc/themes/default/footer.php"
+msgstr "Este es el pie de página. Puede editar este texto en inc/themes/default/footer.php"
+
+#: /var/www/html/framework/inc/themes/default/footer.php:6
+#, php-format
+msgid "Page generated in %s seconds."
+msgstr "Página generada en %s segundos."
+
+#: /var/www/html/framework/inc/themes/default/footer.php:10
+msgid "Typ. Memory: "
+msgstr "Memoria Típ.: "
+
+#: /var/www/html/framework/inc/themes/default/footer.php:11
+msgid "Pike: "
+msgstr "Pique: "
+
+#: /var/www/html/framework/inc/themes/default/footer.php:21
+msgid "Queries: "
+msgstr "Consultas: "
+
+#: /var/www/html/framework/inc/themes/default/footer.php:25
+#, php-format
+msgid "Last activity %s second(s) ago. Session renewed for another %s second(s)."
+msgstr "Última actividad hace %s segundo(s). Sesión renovada por otros %s segundo(s)."
+
+#: /var/www/html/framework/inc/themes/default/header.php:3
+msgid "This is the header. You can edit this at inc/themes/default/header.php"
+msgstr "Esta es la cabecera. Puede editar esta página en /inc/themes/default/header.php"
+
+#: /var/www/html/framework/inc/themes/default/submenu.php:22
+msgid "Change Password"
+msgstr "Cambiar Contraseña"
+
+#: /var/www/html/framework/inc/themes/default/submenu.php:23
+msgid "Logout"
+msgstr "Salir"
+
