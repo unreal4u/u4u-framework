@@ -9,8 +9,6 @@
 class misc {
     private $db;
     private $he;
-    // @TODO get $r out of here
-    private $r;
 
     public function __construct($db=null, $he=null) {
         if (!is_null($db)) {
@@ -19,9 +17,6 @@ class misc {
         if (!is_null($he)) {
             $this->he = $he;
         }
-        // @TODO Get $r out of here
-        global $r;
-        $this->r = & $r;
     }
 
     /**

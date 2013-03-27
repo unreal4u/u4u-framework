@@ -1,6 +1,5 @@
 <?php
 
-use \u4u;
 /**
  * The main application container. This class holds the entire application
  *
@@ -140,7 +139,7 @@ class appContainer {
 
         spl_autoload_register(array(
             $this,
-            'autoload_handler'
+            'autoloadHandler'
         ));
     }
 
@@ -161,18 +160,14 @@ class appContainer {
      * Initializes the session
      */
     private function initializeSession() {
-        session_cache_limiter('private'); // Establezco todo lo que tenga que ver con la sesi?n
-        ini_set("session.gc_maxlifetime", SESION_EXPIRE); // Tiempo de expiracion
+        session_cache_limiter('private');
+        ini_set("session.gc_maxlifetime", SESION_EXPIRE);
         ini_set("session.entropy_file", "/dev/urandom");
         ini_set("session.entropy_length", "512");
-        session_cache_expire(CACHE_EXPIRE); // La cache
+        session_cache_expire(CACHE_EXPIRE);
         session_name(SESION_NAME);
         session_start();
         if (empty($_SESSION['timeout'])) {
-            if ($_SERVER['HTTP_HOST']) {
-                $_SERVER['HTTP_HOST'] = '127.0.0.1';
-            }
-
             $this->db->query('INSERT INTO sist_sessions (id_session,ip,useragent) VALUES (?,INET_ATON(?),?)', session_id(), $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
             $_SESSION['timeout'] = time() + SESION_EXPIRE;
         }
@@ -199,7 +194,7 @@ class appContainer {
      * @param string $class The class name we want to load
      * @return boolean Returns true if class could be included, false otherwise
      */
-    private function autoload_handler($class) {
+    private function autoloadHandler($class) {
         $return = true;
         if (is_readable(CLASSES . $class . '.class.php')) {
             include (CLASSES . $class . '.class.php');
@@ -237,8 +232,15 @@ class appContainer {
     public function validateRoute($uri='') {
         $return = '';
 
-        $allUris = $this->cache->load('uriMapping');
+        #$allUris = $this->cache->load('uriMapping');
+        $allUris = false;
 
+        #$uri = 'no-permission';
+        $uriValidator = new uriValidator($uri);
+
+        debug($uriValidator->loadThis);
+
+        die('dying... '.__FILE__.':'.__LINE__);
         if ($allUris === false OR !array_key_exists($uri, $allUris)) {
             $this->getModules();
 

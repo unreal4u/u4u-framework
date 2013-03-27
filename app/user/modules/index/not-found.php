@@ -13,6 +13,6 @@ $Author: unreal4u $
 $app->isPublicPage = true;
 $app->view->pageTitle = __('404 Not found');
 header('x', true, 404);
-$app->misc->logActivity($r['id_user'], '404', $_SERVER['REQUEST_URI']);
+#$app->misc->logActivity($r['id_user'], '404', $_SERVER['REQUEST_URI']);
 echo $app->misc->c_title(__('We are sorry, but what you are looking for isn\'t here'), sprintf(__('Please, %s to choose the right option'), $app->he->c_href(HOME,__('go back to our index'))));
 echo $app->he->c_tag('p',__('It is also possible that this page is under development right now'));

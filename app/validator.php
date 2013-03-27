@@ -41,10 +41,6 @@ if (empty($_GET['p'])) {
 // Find out what we must load
 $app->validateRoute($_GET['p']);
 
-if (empty($app->module) OR !is_readable(CONTROLLERS . $app->module . '.php')) {
-    $app->module = 'index/not-found';
-}
-
 // Load the framework's options
 $app->loadOptions();
 
