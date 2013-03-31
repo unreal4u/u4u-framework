@@ -1,6 +1,11 @@
 <?php
 
-class controller extends appContainer {
+/**
+ * Intermediator between the application logic and the integration
+ *
+ * @author unreal4u
+ */
+class controller {
     /**
      * The pagetitle to be displayed
      * @var string
@@ -8,17 +13,28 @@ class controller extends appContainer {
     protected $pageTitle = '';
 
     /**
-     * Breadcrump object
-     * @var object
+     * The view class which has to do with everything related to the view
+     * @var unknown
      */
-    protected $bc = null;
+    public $view = null;
 
+    /**
+     * Constructor
+     */
     public function __construct() {
-        $this->bc = $this->app->bc;
+        #$this->misc     = new misc($this->db, $this->he);
+        #$this->msgStack = new messageStack();
+        $this->view     = new view();
     }
 
-    public function execute($module) {
-        // new reflectionClass and such
+    /**
+     * Shorthand to assign things to template
+     *
+     * @param string $variableName
+     * @param mixed $variableValue
+     */
+    public function assign($variableName, $variableValue=null) {
+        $this->view->assign($variableName, $variableValue);
     }
 
     /**
@@ -37,11 +53,10 @@ class controller extends appContainer {
 
         $ajaxController = new $controllerName();
         ob_start();
-        $output = $ajaxController->$actionName();
-        return ob_get_clean();
-    }
+        $ajaxController->$actionName();
+        $output = ob_get_clean();
+        $this->assign('ajaxPrefetch_'.$controller.'_'.$action, $output);
 
-    public function __destruct() {
-        // Render the page
+        return $output;
     }
 }

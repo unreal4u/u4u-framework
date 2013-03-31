@@ -1,6 +1,6 @@
 </div>
 <div id="footer"><?php
-$r['print'] = $app->he->c_tag('p', sprintf(__('This is the footer. You can create a new theme based on %sthemes/default/'), ROUT));
+$r['print'] = $app->he->c_tag('p', sprintf(__('This is the footer. You can create a new theme based on %sthemes/default/'), ABSPATH));
 if (APP_ENVIRONMENT === 'dev') {
     $r['print'] .= $app->he->c_tag('small', sprintf(__('Page generated in %s seconds.'), $app->he->c_tag('strong', number_format(microtime(true) - $app->timeRequestBegin, 6, '.', ','))), 'center');
     unset($r['q']);

@@ -4,7 +4,7 @@ function enviar_mail($todo = array()) {
   $retorno = array('exitoso' => 0, 'falladas' => 0);
   $malo    = array();
   if (is_array($todo)) {
-    include(ROUT.'phpmailer/class.phpmailer.php');
+    include(ABSPATH.'phpmailer/class.phpmailer.php');
     $mailer = new PHPMailer(true);
     $mailer->isSMTP();
     $mailer->CharSet       = CHARSET;

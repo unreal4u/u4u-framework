@@ -1,11 +1,31 @@
 <?php
 
 class uriHandler {
+    /**
+     * Quick way to know what files NOT to include again
+     * @var array
+     */
+    private $includedControllers = array();
+
+    /**
+     * The default index
+     * @var string
+     */
     public $defaultIndex = HOMEPAGE;
+
+    /**
+     * The not found page
+     * @var array
+     */
     public $notFound = array(
-        'request' => 'index/not-found/', 'controller' => 'index', 'action' => 'action_NotFound'
+        'request' => 'index/not-found/', 'controller' => 'controller_index', 'action' => 'action_NotFound'
     );
-    public $loadThis = '';
+
+    /**
+     * The definitive class to load
+     * @var array
+     */
+    public $loadThis = array();
 
     public function __construct($uri = '') {
         if (!empty($uri)) {
@@ -29,7 +49,15 @@ class uriHandler {
             }
             $i++;
         }
-        return $uriParts;
+
+        $finalParts = array();
+        if (!empty($uriParts)) {
+            foreach($uriParts AS $uriPart) {
+                $finalParts[] = $uriPart;
+            }
+        }
+
+        return $finalParts;
     }
 
     /**
@@ -39,10 +67,34 @@ class uriHandler {
      * @return string
      */
     private function convertUriToMethodName($methodName = '') {
-        $return = str_replace(' ', '', ucwords(str_replace('-', ' ', $methodName)));
+        $return = 'action_' . str_replace(' ', '', ucwords(str_replace('-', ' ', $methodName)));
         return $return;
     }
 
+    /**
+     * Creates the module formatted array to be used by the rest of the system
+     *
+     * @param string $request
+     * @param string $controller
+     * @param string $action
+     * @return array
+     */
+    private function createModuleArray($request, $controller, $action) {
+        $return['request'] = $request;
+        $return['controller'] = 'controller_'.$controller;
+        $return['action'] = $action;
+        $return['view'] = $controller.'/'.str_replace('action_', '', strtolower($action)).'.phtml';
+        $return['abspath'] = CONTROLLERS . $controller . '.php';
+
+        return $return;
+    }
+
+    /**
+     * Checks for possible readable candidates
+     *
+     * @param array $uriParts
+     * @return array
+     */
     private function getCandidates(array $uriParts = array()) {
         $readableCandidates = array();
         $controllerName = '';
@@ -54,7 +106,49 @@ class uriHandler {
             }
             $controllerName .= '/';
         }
+
         return $readableCandidates;
+    }
+
+    /**
+     * Analyzes the given controller in search for usable methods
+     *
+     * @param string $controller
+     * @return array
+     */
+    private function getMethodsOfController($controller) {
+        $methods = array();
+
+        $this->includeController($controller);
+        $rc = new \ReflectionClass('controller_'.$controller);
+        $rcMethods = $rc->getMethods(\ReflectionMethod::IS_PUBLIC);
+        if (!empty($rcMethods)) {
+            foreach($rcMethods AS $rcMethod) {
+                $method = $rcMethod->getName();
+                if (strpos($method, 'action_') === 0) {
+                    $methods[] = $method;
+                }
+            }
+        }
+
+        return $methods;
+    }
+
+    /**
+     * Includes the necesary files
+     *
+     * @param string $controller
+     * @return boolean
+     */
+    public function includeController($controller) {
+        $controller = str_replace('controller_', '', $controller);
+
+        if (!in_array($controller, $this->includedControllers)) {
+            include(CONTROLLERS . $controller . '.php');
+            $this->includedControllers[] = $controller;
+        }
+
+        return true;
     }
 
     /**
@@ -67,55 +161,41 @@ class uriHandler {
         $return = array();
         $uriParts = $this->formatCandidateUri($uri);
         if (!empty($uriParts)) {
-            // Always include our main index file, comes in handy later on
+            $numberOfParts = count($uriParts);
+
             $controllerName = '';
-            if (count($uriParts) == 1 or $uriParts[0] == 'index') {
-                include (CONTROLLERS . 'index.php');
-                $rc = new \ReflectionClass('controller_index');
-                $rcMethods = $rc->getMethods(\ReflectionMethod::IS_PUBLIC);
-                foreach ($rcMethods as $rcMethod) {
-                    $methods[] = $rcMethod->getName();
-                }
-                $methodName = 'action_' . $this->convertUriToMethodName($uriParts[0]);
-                if (in_array($methodName, $methods)) {
-                    $return = array('request' => $uri, 'controller' => 'index', 'action' => $methodName);
+            if ($numberOfParts == 1 || $uriParts[0] == 'index') {
+                $methods = $this->getMethodsOfController('index');
+                if ($numberOfParts > 1) {
+                    $methodName = $this->convertUriToMethodName($uriParts[1]);
                 } else {
-                    $uriParts[] = 'index';
+                    $methodName = $this->convertUriToMethodName($uriParts[0]);
+                }
+
+                if (in_array($methodName, $methods)) {
+                    $return = $this->createModuleArray($uri, 'index', $methodName);
                 }
                 unset($rc, $rcMethod, $rcMethods, $methods, $methodName);
+                $uriParts[1] = 'index';
             }
 
             if (empty($return)) {
                 $readableCandidates = $this->getCandidates($uriParts);
-                debug($readableCandidates, true, 'File candidates: ');
                 if (!empty($readableCandidates)) {
                     foreach ($readableCandidates as $readableCandidate) {
-                        //
+                        $methods = $this->getMethodsOfController($readableCandidate);
+                        $methodName = $this->convertUriToMethodName($uriParts[1]);
+                        if (in_array($methodName, $methods)) {
+                            $return = $this->createModuleArray($uri, $readableCandidate, $methodName);
+                        }
                     }
-                } else {
-                    $return = $this->notFound;
                 }
-                #if (is_readable(CONTROLLERS.$controllerName.'.php')) {
-                #    include(CONTROLLERS.$controllerName.'.php');
-                #    $rc = new \ReflectionClass($controllerName);
-                #    $rcMethods = $rc->getMethods(\ReflectionMethod::IS_PUBLIC);
-                #    $methodName = $this->convertUriToMethodName($uriParts[0]);
-                #    if (in_array('action_'.$methodName, $rcMethods)) {
-                #        $return = array($uri, $controllerName, $methodName);
-                #    } else {
-                #        if (in_array('action_Index', $rcMethods)) {
-                #            $return = array($uri, $controllerName, 'action_Index');
-                #        } else {
-                #            $return = $this->notFound;
-                #        }
-                #    }
-                #}
             }
-        } else {
+        }
+
+        if (empty($return)) {
             $return = $this->notFound;
         }
-        #debug($uriParts);
-        #debug($return);
         return $return;
     }
 

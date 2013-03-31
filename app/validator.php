@@ -12,6 +12,7 @@
 include(dirname(__FILE__).'/config.php');
 include(THIRDPARTY_DIRECTORY.'enabled-thirdparty-extensions.php');
 include(CLASSES.'appContainer.class.php');
+include(CLASSES.'controller.class.php');
 
 // Create the $app object
 $app = new appContainer();
@@ -30,16 +31,8 @@ if (function_exists('bind_textdomain_codeset')) {
 }
 textdomain('messages');
 
-// Find out what the requested page is
-if (empty($_GET['p'])) {
-    if (HOMEPAGE !== 'index/index/') {
-        $app->misc->redir(HOME . HOMEPAGE);
-    }
-    $_GET['p'] = HOMEPAGE;
-}
-
 // Find out what we must load
-$app->validateRoute($_GET['p']);
+$app->validateRoute();
 
 // Load the framework's options
 $app->loadOptions();
@@ -89,12 +82,8 @@ if ($app->loggedIn === true) {
 // Including the base breadcrump
 $app->bc->add(HOME, __('Home'));
 $i = 0;
-ob_start();
-$controller = new controller($app);
-$controller->execute($app->executeModule);
-#include (CONTROLLERS . $app->module . '.php');
-$app->pageContents = ob_get_contents();
-ob_end_clean();
+$app->pageContents = $app->execute($app->executeModule);
+
 // After including the page we are trying to visit, some additional checks
 if (!empty($app->isAjaxRequest)) {
     $app->loadHeaders = false;
@@ -116,15 +105,15 @@ if (!empty($app->isAjaxRequest)) {
 }
 // Empezamos a limpiar y logear la acción realizada
 if (!$app->loggedIn) {
-    unset($r['submenu']);
+    #unset($r['submenu']);
 } else {
-    if (empty($app->isAjaxRequest)) {
-        $app->misc->logActivity($r['id_user'], 'pag', $_SERVER['REQUEST_URI']);
-    } else if (LOG_AJAX_REQUESTS === true) {
-        $app->misc->logActivity($r['id_user'], 'ajx', $_SERVER['REQUEST_URI']);
-    }
+    #if (empty($app->isAjaxRequest)) {
+    #    $app->misc->logActivity($r['id_user'], 'pag', $_SERVER['REQUEST_URI']);
+    #} else if (LOG_AJAX_REQUESTS === true) {
+    #    $app->misc->logActivity($r['id_user'], 'ajx', $_SERVER['REQUEST_URI']);
+    #}
 }
 
-include (ROUT . 'c_header.php');
+include (ABSPATH . 'c_header.php');
 echo $app->pageContents;
-include (ROUT . 'c_footer.php');
+include (ABSPATH . 'c_footer.php');

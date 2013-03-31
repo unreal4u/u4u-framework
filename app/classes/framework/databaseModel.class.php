@@ -76,5 +76,9 @@ abstract class databaseModel {
 			return $object->save();
 		}
 	}
+
+	public function save() {
+	    // Inserts or updates the current object
+	}
 }
 

@@ -3,21 +3,15 @@
  * Module description
  *
  * @package General
- * @version $Rev$
- * @copyright $Date$
- * @author $Author$
+ * @author Camilo Sperberg
  * @license BSD License. Feel free to use and modify
  */
-
 class view {
-    public $pageTitle;
-
-	public function __constructor() {
-		// Nothing
-	}
-
 	/**
 	 * Assigns a variable to the template
+	 *
+	 * @param string $variableName
+	 * @param mixed $variableValue
 	 */
 	public function assign($variableName, $variableValue=null) {
 		if (!empty($variableName)) {
@@ -25,5 +19,16 @@ class view {
 		}
 	}
 
-	//public function
+	/**
+	 * Does the definite work of rendering the template
+	 *
+	 * @param unknown $module
+	 */
+	public function renderTemplate($module) {
+	    ob_start();
+	    include(USER_SPACE.'views/'.$module['view']);
+	    $contents = ob_get_contents();
+	    ob_end_clean();
+	    return $contents;
+	}
 }

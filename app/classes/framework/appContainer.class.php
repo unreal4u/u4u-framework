@@ -156,7 +156,9 @@ class appContainer {
         $this->includeThirdparty(U4U_CLASSES);
         $this->u4uAutoLoader   = new \u4u\autoLoader();
         $this->db              = $this->u4uAutoLoader->instantiateClass('db_mysqli');
-        $this->db->keepLiveLog = true;
+        if (APP_ENVIRONMENT != 'production') {
+            $this->db->keepLiveLog = true;
+        }
 
         $this->initializeSession();
         $this->registerBasicClasses();
@@ -185,14 +187,12 @@ class appContainer {
     private function registerBasicClasses() {
         $this->cache    = $this->u4uAutoLoader->instantiateClass('cacheManager' , array('apc'));
         if (APP_ENVIRONMENT != 'production') {
-            $this->cache->enableDebugMode();
+            #$this->cache->enableDebugMode();
         }
         $this->he       = $this->u4uAutoLoader->instantiateClass('HTMLUtils');
         $this->css      = $this->u4uAutoLoader->instantiateClass('csstacker');
-        $this->misc     = new misc($this->db, $this->he);
-        $this->msgStack = new messageStack();
         $this->bc       = new breadcrump();
-        $this->view     = new view();
+        $this->msgStack = new messageStack();
     }
 
     /**
@@ -232,43 +232,32 @@ class appContainer {
     /**
      * Checks, sets and validates the module/controller we are trying to load
      *
-     * @param string $uri The route the user requested
      * @return string The definite route of the file we want to load
      */
-    public function validateRoute($uri='') {
+    public function validateRoute() {
         $return = '';
 
-        #$allUris = $this->cache->load('uriMapping');
-        $allUris = false;
+        $uriHandler = new uriHandler();
+        // Check if we can retrieve the to-be-loaded module from cache
+        $return = $this->cache->load('u4u-loadModule', array('u4u-internals', $_SERVER['REQUEST_URI']));
+        if ($return === false) {
+            if (!empty($_SERVER['REQUEST_URI'])) {
+                $uri = str_replace(REWRITE_BASE, '', $_SERVER['REQUEST_URI']);
+            }
+            if (empty($uri)) {
+                $uri = HOMEPAGE;
+            }
 
-        #$uri = 'no-permission';
-        $uriHandler = new uriHandler($uri);
-
-        debug($uriHandler->loadThis);
-
-        die('dying... '.__FILE__.':'.__LINE__);
-
-        $this->executeModule  = $uriHandler->loadThis;
-        $this->request = $uri;
-        if (!empty($this->executeModule)) {
-            $this->myHome = $this->request.'/';
+            // Validate the URI and save it into cache (can be pretty intensive)
+            $return = $uriHandler->validateUri($uri);
+            $this->cache->save($return, 'u4u-loadModule', array('u4u-internals', $_SERVER['REQUEST_URI']), 3600);
         }
 
+        // If everything was rescued from cache, the controller hasn't been included. Do so now
+        $uriHandler->includeController($return['controller']);
+
+        $this->executeModule = $return;
         return $return;
-    }
-
-    /**
-     * Gets a list of all modules in the system
-     */
-    private function getModules() {
-        $this->modules = $this->cache->load('activeModules');
-        if ($this->modules === false) {
-            $this->modules = $this->misc->getFilteredDirContentString(CONTROLLERS, array(), array('php'));
-            $this->modules = str_replace(CONTROLLERS, '', $this->modules);
-            $this->cache->save($this->modules, 'activeModules', array(), 3600);
-        }
-
-        return $this->modules;
     }
 
     /**
@@ -277,7 +266,7 @@ class appContainer {
      * @return array Returns an array with all options
      */
     public function loadOptions() {
-        $this->options = $this->cache->load('siteOptions');
+        $this->options = $this->cache->load('u4u-siteOptions', array('u4u-internals'));
         if (empty($this->options)) {
             $aOptions = $this->db->query('SELECT name AS option_name,v FROM sist_options WHERE id_option = ?', 'sop');
             if ($this->db->num_rows > 0) {
@@ -285,11 +274,24 @@ class appContainer {
                     $this->options[$a['option_name']] = $a['v'];
                 }
             }
-            unset($aOptions, $a);
-            $this->cache->save($this->options, 'siteOptions', array(), 3600);
+            $this->cache->save($this->options, 'u4u-siteOptions', array('u4u-internals'), 3600);
         }
 
         return $this->options;
+    }
+
+    /**
+     * Executes the selected module
+     *
+     * @param array $module
+     */
+    public function execute($module) {
+        $controllerName = $module['controller'];
+        $methodName = $module['action'];
+
+        $controller = new $controllerName();
+        $controller->$methodName();
+        return $controller->view->renderTemplate($module);
     }
 
     /**
@@ -308,7 +310,7 @@ class appContainer {
             $i++;
         }
 
-        $cacheResult = $this->cache->load('leftmenu', array('groupString' => $groupString));
+        $cacheResult = $this->cache->load('u4u-leftmenu', array('u4u-internals', 'groupString' => $groupString));
         if (empty($cacheResult)) {
             $this->menu = $this->db->query('SELECT link,description,id_grp FROM sist_menu WHERE (' . $groupString . ' OR id_grp = ?) AND visible = ? ORDER BY id_order', 1, 1);
             if ($this->db->num_rows > 0) {
@@ -324,8 +326,8 @@ class appContainer {
             // Save return, menu and found into one big array in cache, saves a lot of processing power on later requests
             $this->cache->save(
                 array('return' => $return, 'menu' => $this->menu, 'found' => $this->found,),
-                'leftmenu',
-                array('groupString' => $groupString),
+                'u4u-leftmenu',
+                array('u4u-internals', 'groupString' => $groupString),
                 3600
             );
         } else {
