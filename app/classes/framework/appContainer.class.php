@@ -236,7 +236,7 @@ class appContainer {
         $allUris = false;
 
         #$uri = 'no-permission';
-        $uriValidator = new uriValidator($uri);
+        $uriValidator = new uriHandler($uri);
 
         debug($uriValidator->loadThis);
 
