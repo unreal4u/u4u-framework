@@ -44,7 +44,7 @@ $app->validateRoute($_GET['p']);
 // Load the framework's options
 $app->loadOptions();
 
-if (empty($app->options['installed']) and $app->module != 'install/index') {
+if (empty($app->options['installed']) && $app->module != 'install/index') {
     $app->misc->redir(HOME . 'install/');
 }
 if (empty($app->options['active_theme'])) {
@@ -88,10 +88,11 @@ if ($app->loggedIn === true) {
 
 // Including the base breadcrump
 $app->bc->add(HOME, __('Home'));
-$pantalla = '';
 $i = 0;
 ob_start();
-include (CONTROLLERS . $app->module . '.php');
+$controller = new controller($app);
+$controller->execute($app->executeModule);
+#include (CONTROLLERS . $app->module . '.php');
 $app->pageContents = ob_get_contents();
 ob_end_clean();
 // After including the page we are trying to visit, some additional checks
@@ -99,14 +100,14 @@ if (!empty($app->isAjaxRequest)) {
     $app->loadHeaders = false;
     $app->he->c_closebody();
     $app->he->c_closehtml();
-    if (!isset($_SERVER['HTTP_REFERER']) or strpos($_SERVER['HTTP_REFERER'], HOME) === false) {
+    if (!isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], HOME) === false) {
         die(__('Access denied'));
     }
 } else {
-    if ($app->loggedIn and !$app->found and empty($app->isPublicPage)) {
+    if ($app->loggedIn && !$app->found && empty($app->isPublicPage)) {
         #$app->misc->redir(HOME . 'no-permission/');
     }
-    if (!isset($app->isPublicPage) and $app->loggedIn == false) {
+    if (!isset($app->isPublicPage) && $app->loggedIn == false) {
         $app->misc->redir(HOME . 'login/');
     }
     #if (APP_ENVIRONMENT === 'dev' and !in_array(2, $_SESSION['id_grp'])) {
@@ -127,4 +128,3 @@ if (!$app->loggedIn) {
 include (ROUT . 'c_header.php');
 echo $app->pageContents;
 include (ROUT . 'c_footer.php');
-

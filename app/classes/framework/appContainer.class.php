@@ -66,6 +66,12 @@ class appContainer {
      * @var boolean
      */
     public $found = false;
+
+    /**
+     * Which module to execute
+     * @var array
+     */
+    public $executeModule = '';
     public $id_user;
 
     /**
@@ -179,11 +185,11 @@ class appContainer {
     private function registerBasicClasses() {
         $this->cache    = $this->u4uAutoLoader->instantiateClass('cacheManager' , array('apc'));
         if (APP_ENVIRONMENT != 'production') {
-            //$this->cache->enableDebugMode();
+            $this->cache->enableDebugMode();
         }
         $this->he       = $this->u4uAutoLoader->instantiateClass('HTMLUtils');
-        $this->misc     = new misc($this->db, $this->he);
         $this->css      = $this->u4uAutoLoader->instantiateClass('csstacker');
+        $this->misc     = new misc($this->db, $this->he);
         $this->msgStack = new messageStack();
         $this->bc       = new breadcrump();
         $this->view     = new view();
@@ -236,52 +242,15 @@ class appContainer {
         $allUris = false;
 
         #$uri = 'no-permission';
-        $uriValidator = new uriHandler($uri);
+        $uriHandler = new uriHandler($uri);
 
-        debug($uriValidator->loadThis);
+        debug($uriHandler->loadThis);
 
         die('dying... '.__FILE__.':'.__LINE__);
-        if ($allUris === false OR !array_key_exists($uri, $allUris)) {
-            $this->getModules();
 
-            if (empty($uri)) {
-                $uri = HOMEPAGE;
-            }
-
-            $uri = trim($uri, '/');
-
-            if (in_array($uri.'.php', $this->modules)) {
-                $return = $uri;
-            } else {
-                if (in_array('index/'.$uri.'.php', $this->modules)) {
-                    $return = 'index/'.$uri;
-                } else {
-                    $workingUri = $uri;
-                    if (substr_count($workingUri, '/') < 1) {
-                        $workingUri .= '/index';
-                    }
-
-                    if (in_array($workingUri.'.php', $this->modules)) {
-                        $return = $workingUri;
-                    } else {
-                        $return = 'index/not-found';
-                    }
-                }
-            }
-
-            if (strpos($return, 'ajax/') !== false) {
-                $this->isAjaxRequest = true;
-            }
-
-            $allUris[$uri] = $return;
-            $this->cache->save($allUris, 'uriMapping', array(), 3600);
-        } else {
-            $return = $allUris[$uri];
-        }
-
-        $this->module  = $return;
+        $this->executeModule  = $uriHandler->loadThis;
         $this->request = $uri;
-        if (!empty($this->module)) {
+        if (!empty($this->executeModule)) {
             $this->myHome = $this->request.'/';
         }
 

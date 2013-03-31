@@ -3,7 +3,7 @@
 class uriHandler {
     public $defaultIndex = HOMEPAGE;
     public $notFound = array(
-        'index/not-found/', 'index', 'action_NotFound'
+        'request' => 'index/not-found/', 'controller' => 'index', 'action' => 'action_NotFound'
     );
     public $loadThis = '';
 
@@ -78,14 +78,13 @@ class uriHandler {
                 }
                 $methodName = 'action_' . $this->convertUriToMethodName($uriParts[0]);
                 if (in_array($methodName, $methods)) {
-                    $return = array(
-                        $uri, 'index', $methodName
-                    );
+                    $return = array('request' => $uri, 'controller' => 'index', 'action' => $methodName);
                 } else {
                     $uriParts[] = 'index';
                 }
                 unset($rc, $rcMethod, $rcMethods, $methods, $methodName);
             }
+
             if (empty($return)) {
                 $readableCandidates = $this->getCandidates($uriParts);
                 debug($readableCandidates, true, 'File candidates: ');
