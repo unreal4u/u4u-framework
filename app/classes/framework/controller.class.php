@@ -19,12 +19,16 @@ class controller {
     public $view = null;
 
     /**
-     * Constructor
+     * Links the basic classes to the controller so that they can be used
      */
-    public function __construct() {
-        #$this->misc     = new misc($this->db, $this->he);
-        #$this->msgStack = new messageStack();
-        $this->view     = new view();
+    public function linkBasicClasses(appContainer $app=null) {
+        $this->view = new view();
+        $this->bc = $app->bc;
+        $this->msgStack = $app->msgStack;
+        $this->db = $app->db;
+        $this->cache = $app->cache;
+        $this->he = $app->he;
+        $this->css = $app->css;
     }
 
     /**
@@ -58,5 +62,12 @@ class controller {
         $this->assign('ajaxPrefetch_'.$controller.'_'.$action, $output);
 
         return $output;
+    }
+
+    /**
+     * Creates an URL from the current controller/action
+     */
+    private function createUrlFromController() {
+        return '';
     }
 }

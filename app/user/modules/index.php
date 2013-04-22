@@ -4,22 +4,25 @@ class controller_index extends controller {
     public function action_Index() {
         $this->isPublicPage = true;
         $this->pageTitle = __('Main index');
-        #$this->bc->add('hello', 'hello!!');
         $this->assign('mySpecialVar', 'Hello world!');
+
+        $sistProblemIdentifier = new sistProblemIdentifier();
+        $sistProblemIdentifier->addProblem('This is a problem!', 4);
+        debug($sistProblemIdentifier);
 
         return true;
     }
 
     public function action_Install() {
         $this->isPublicPage = false;
-        $this->misc->c_title(__('System installation'), __('This page will execute a serie of steps in order to install the system'));
+        #$this->misc->c_title(__('System installation'), __('This page will execute a serie of steps in order to install the system'));
 
         return true;
     }
 
     public function action_Login() {
         $this->isPublicPage = true;
-        $this->bc->add($app->myHome, __('Login'));
+        #$this->bc->add($app->myHome, __('Login'));
 
         return true;
     }
@@ -40,7 +43,7 @@ class controller_index extends controller {
         $this->isPublicPage = true;
         $this->pageTitle = __('403 Forbidden access');
         header('x', true, 403);
-        $this->misc->c_title(__('We are sorry, but you have no permission to see this page'), sprintf(__('Please, %s to choose the right option'), $this->he->c_href(HOME,__('go back to our index'))));
+        #$this->misc->c_title(__('We are sorry, but you have no permission to see this page'), sprintf(__('Please, %s to choose the right option'), $this->he->c_href(HOME,__('go back to our index'))));
         $this->he->c_tag('p',__('It is also possible that this page is under development right now'));
 
         return true;

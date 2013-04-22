@@ -202,11 +202,17 @@ class appContainer {
      */
     private function autoloadHandler($class) {
         $return = true;
+        // Loads the classes
         if (is_readable(CLASSES . $class . '.class.php')) {
             include (CLASSES . $class . '.class.php');
         } else {
+            // Loads the models
+            if (is_readable(USER_SPACE.'models/'.$class.'.php')) {
+                include(USER_SPACE.'models/'.$class.'.php');
+            }
             $return = false;
         }
+
         return $return;
     }
 
@@ -290,6 +296,7 @@ class appContainer {
         $methodName = $module['action'];
 
         $controller = new $controllerName();
+        $controller->linkBasicClasses($this);
         $controller->$methodName();
         return $controller->view->renderTemplate($module);
     }

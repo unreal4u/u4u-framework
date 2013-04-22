@@ -194,7 +194,7 @@ class uriHandler {
         }
 
         if (empty($return)) {
-            $return = $this->notFound;
+            $return = $this->createModuleArray($this->notFound['request'], $this->notFound['controller'], $this->notFound['action']);
         }
         return $return;
     }
