@@ -7,3 +7,7 @@
  */
 define('INCL','../app/');
 include(INCL.'validator.php');
+
+include (ABSPATH . 'c_header.php');
+echo $app->pageContents;
+include (ABSPATH . 'c_footer.php');

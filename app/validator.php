@@ -50,9 +50,9 @@ if (empty($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;
 } else {
     if (APP_ENVIRONMENT === 'dev') {
-        $sesinfo = (time() + SESION_EXPIRE) - $_SESSION['timeout'];
-        if ($sesinfo < 0) {
-            $sesinfo = abs($sesinfo) + SESION_EXPIRE;
+        $app->sessionExpireInformation = (time() + SESION_EXPIRE) - $_SESSION['timeout'];
+        if ($app->sessionExpireInformation < 0) {
+            $app->sessionExpireInformation = abs($app->sessionExpireInformation) + SESION_EXPIRE;
         }
     }
     if (time() > $_SESSION['timeout']) {
@@ -70,18 +70,15 @@ $app->css->resetCSS = true;
 $app->css->add(USER_SPACE . 'themes/' . $app->options['active_theme'] . '/css/base.css');
 
 if ($app->loggedIn === true) {
-    $r['id_user'] = $_SESSION['id_user'];
+    $app->id_user = $_SESSION['id_user'];
     #$app->loginUsername = $_SESSION['loginUsername'];
-    $result = $app->setMenuAndCheck();
-    if ($result === 1) {
+    if ($app->setMenuAndCheck() === 1) {
         $this->msgStack->add(2, __('You don\'t have access to any option in the menu and you just will have access to the most basic options.<br />If you believe it\'s a mistake, talk with an administrator.'));
     }
-    unset($result);
 }
 
 // Including the base breadcrump
 $app->bc->add(HOME, __('Home'));
-$i = 0;
 $app->pageContents = $app->execute($app->executeModule);
 
 // After including the page we are trying to visit, some additional checks
@@ -113,7 +110,3 @@ if (!$app->loggedIn) {
     #    $app->misc->logActivity($r['id_user'], 'ajx', $_SERVER['REQUEST_URI']);
     #}
 }
-
-include (ABSPATH . 'c_header.php');
-echo $app->pageContents;
-include (ABSPATH . 'c_footer.php');

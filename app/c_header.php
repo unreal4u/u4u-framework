@@ -17,19 +17,19 @@ if (!empty($app->loadHeaders)) {
         header('Pragma: no-cache');
         header('Content-type: text/html; charset=' . CHARSET);
     }
-    $print = $app->he->c_html();
+    print($app->he->c_html());
     if (isset($app->css)) {
-        $print .= $app->he->c_link(HOME.$app->css->printme('filename'));
+        print($app->he->c_link(HOME.$app->css->printme('filename')));
     } else {
-        $print .= $app->he->c_link(HOME . 'js/min.css');
+        print($app->he->c_link(HOME . 'js/min.css'));
     }
-    $print .= $app->he->c_link(HOME . IMAG . 'favicon.ico', 'shortcut');
-    $print .= $app->he->c_script(array(
+    print($app->he->c_link(HOME . IMAG . 'favicon.ico', 'shortcut'));
+    print($app->he->c_script(array(
         HOME . JSCR . $app->options['jquery_main'], HOME . JSCR . 'common.js'
-    ));
+    )));
     if (!empty($app->javascriptFiles[0])) {
         foreach ($app->javascriptFiles as $a) {
-            $print .= $app->he->c_script($a);
+            print($app->he->c_script($a));
         }
     }
     #if (!empty($r['ayuda'][0])) {
@@ -38,7 +38,7 @@ if (!empty($app->loadHeaders)) {
     #}
     if (!empty($app->javascriptCode[0])) {
         foreach ($app->javascriptCode as $a) {
-            $print .= $app->he->c_javascript($a);
+            print($app->he->c_javascript($a));
         }
     }
     #if (isset($r['meta']) and !empty($r['meta'][0])) {
@@ -62,8 +62,6 @@ if (!empty($app->loadHeaders)) {
     #    $r['onload'] = '';
     #}
     #$print .= $app->he->c_body($r['onload']);
-    #unset($r['meta'], $r['onload'], $a);
-    echo $print;
-    unset($print);
+    unset($a);
     include (USER_SPACE . 'themes/' . $app->options['active_theme'] . '/header.php');
 }

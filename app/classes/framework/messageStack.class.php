@@ -35,7 +35,8 @@ class messageStack {
      * @return bool Esta función retorna siempre TRUE
      */
     public function add($type = null, $message = '') {
-        global $r;
+        #global $r;
+        $r = array();
         $exists = FALSE;
         if ($this->iErr > 0)
             foreach ($_SESSION[$this->session_identifier] as $m)

@@ -1,5 +1,4 @@
 <?php
-use \u4u\db_mysqli;
 use \u4u\cacheManager;
 
 class fieldNotExistsException extends \Exception {}
@@ -13,7 +12,7 @@ class fieldNotExistsException extends \Exception {}
  * @author $Author$
  * @license BSD License. Feel free to use and modify
  */
-abstract class databaseModel {
+abstract class databaseModel extends queryHandler {
     /**
      * Holds the current table name
      *
@@ -26,6 +25,19 @@ abstract class databaseModel {
 	 * @var array
 	 */
     protected $_fields = array();
+
+    /**
+     * Contains a small list of the insertable fields
+     * @var array
+     */
+    protected $_insertFields = array();
+
+    /**
+     * Contains a small list with the primary key fields of the
+     * @var unknown
+     */
+    protected $_primaryKeyFields = array();
+
     /**
 	 * The initial data with which to populate our table
 	 *
@@ -69,11 +81,21 @@ abstract class databaseModel {
 
             // Set the fields
             $databaseDDL['fields'] = $this->_fields + $this->fields;
-            $cacheManager->save($databaseDDL, 'u4u-databaseDDL', array('u4u-internals', 'class' => $this->_extendingClassName), 86400);
+            foreach($databaseDDL['fields'] AS $fieldName => $fieldSettings) {
+                $databaseDDL['insertFields'][] = $fieldName;
+                if (!empty($fieldSettings['INDEXES']) && array_key_exists('PRIMARY', $fieldSettings['INDEXES'])) {
+                    $databaseDDL['primaryKey'][] = $fieldName;
+                }
+            }
+
+            // @TODO 2013-05-09 Enable cache!
+            #$cacheManager->save($databaseDDL, 'u4u-databaseDDL', array('u4u-internals', 'class' => $this->_extendingClassName), 86400);
         }
 
-        $this->_tableName = $databaseDDL['tableName'];
-        $this->_fields = $databaseDDL['fields'];
+        $this->_tableName        = $databaseDDL['tableName'];
+        $this->_fields           = $databaseDDL['fields'];
+        $this->_primaryKeyFields = $databaseDDL['primaryKey'];
+        $this->_insertFields     = $databaseDDL['insertFields'];
         $this->_fillDefaultsFields();
         return true;
     }
@@ -154,12 +176,15 @@ abstract class databaseModel {
         }
     }
 
+
     /**
      * Saves the object
      *
      * @return boolean Returns true on success save, false otherwise
      */
     public function save() {
+        $query = $this->generateQuery();
+        #return $this->insert_id($query, $this->databaseFields);
         return true;
     }
 }

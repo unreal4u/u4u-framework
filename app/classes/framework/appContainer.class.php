@@ -73,6 +73,7 @@ class appContainer {
      */
     public $executeModule = '';
     public $id_user;
+    public $sessionExpireInformation = 0;
 
     /**
      * Contains the left menu
