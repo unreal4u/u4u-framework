@@ -8,7 +8,7 @@ class controller_index extends controller {
 
         $sistProblemIdentifier = new sistProblemIdentifier();
         $sistProblemIdentifier->addProblem('This is a problem!', 4);
-        debug($sistProblemIdentifier);
+        debugFirePHP($sistProblemIdentifier);
 
         return true;
     }

@@ -1,5 +1,8 @@
 <?php
 use \u4u\db_mysqli;
+use \u4u\cacheManager;
+
+class fieldNotExistsException extends \Exception {}
 
 /**
  * Module description
@@ -46,24 +49,47 @@ abstract class databaseModel {
 	 * Constructor
 	 */
     public function __construct() {
-            $this->_extendingClassName = get_called_class();
-        $rc = new \ReflectionClass($this->_extendingClassName);
-        if (!$rc->isSubclassOf('databaseModel')) {
-            $errorMessage = 'Class doesn\'t extend databaseModel, aborting creation';
-            #if ($this->throwExceptions === true) {
-            #    throw new \u4u\cacheException($errorMessage);
-            #}
-            #trigger_error($errorMessage, E_USER_ERROR);
-        }
-        $this->_tableName = $rc->getConstant('TABLE_NAME');
-        $this->_fields = $this->_fields + $this->fields;
-        foreach($this->_fields AS $field => $value) {
-            if (isset($value['DEFAULT'])) {
-                $this->databaseFields[$field] = $value['DEFAULT'];
-            } else {
-                $this->databaseFields[$field] = null;
+        $this->_fillBasics();
+        // 99% of the time we won't need these fields, so unset them immediatly
+        unset($this->_fields, $this->fields, $this->_initialData);
+    }
+
+    private function _fillBasics() {
+        $this->_extendingClassName = get_called_class();
+        $cacheManager = new cacheManager('apc');
+        $databaseDDL = $cacheManager->load('u4u-databaseDDL', array('u4u-internals', 'class' => $this->_extendingClassName));
+        if ($databaseDDL === false) {
+            $databaseDDL = array();
+            $rc = new \ReflectionClass($this->_extendingClassName);
+            // Set the table name, first from constant, if that doesn't work, grab it from the class's name
+            $databaseDDL['tableName'] = $rc->getConstant('TABLE_NAME');
+            if (empty($databaseDDL['tableName'])) {
+                $databaseDDL['tableName'] = $this->_extendingClassName;
             }
+
+            // Set the fields
+            $databaseDDL['fields'] = $this->_fields + $this->fields;
+            $cacheManager->save($databaseDDL, 'u4u-databaseDDL', array('u4u-internals', 'class' => $this->_extendingClassName), 86400);
         }
+
+        $this->_tableName = $databaseDDL['tableName'];
+        $this->_fields = $databaseDDL['fields'];
+        $this->_fillDefaultsFields();
+        return true;
+    }
+
+    /**
+     * Fills in all fields of the object with the object's default values
+     */
+    private function _fillDefaultsFields() {
+        foreach($this->_fields AS $field => $value) {
+            if (!isset($value['DEFAULT'])) {
+                $value['DEFAULT'] = null;
+            }
+            $this->databaseFields[$field] = $value['DEFAULT'];
+        }
+
+        return true;
     }
 
     /**
@@ -97,16 +123,23 @@ abstract class databaseModel {
     /**
 	 * Method that check differences between current table
 	 */
-    public function systemInstall($fields = array()) {
+    public function systemInstall() {
+        // First of all, delete all data from cache and regenerate it
+        $cacheManager = new cacheManager('apc');
+        $cacheManager->purgeIdentifierCache('u4u-databaseDDL', array('u4u-internals', 'class' => $this->_extendingClassName));
+        $this->_fillBasics();
+
         $previousTable = '';
-        foreach ($fields as $table => $field) {
+        foreach ($this->_fields as $table => $field) {
             if (!empty($previousTable)) {
                 $sql = ' AFTER ' . $previousTable;
                 $previousTable = $table;
             }
         }
+
+        $isNewTable = false;
         if ($isNewTable === true) {
-            $this->insertArrayData($initialData);
+            $this->insertArrayData($this->_initialData);
         }
     }
 
@@ -121,6 +154,11 @@ abstract class databaseModel {
         }
     }
 
+    /**
+     * Saves the object
+     *
+     * @return boolean Returns true on success save, false otherwise
+     */
     public function save() {
         return true;
     }

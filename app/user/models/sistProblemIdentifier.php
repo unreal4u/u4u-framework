@@ -10,14 +10,21 @@
  */
 
 class sistProblemIdentifier extends databaseModel {
-    const TABLE_NAME = 'sist_problemIdentifier';
+    #const TABLE_NAME = 'sist_problemIdentifier';
 
 	protected $fields = array(
-		'id' 	  => array('type' => 'INT(8)',      'NULL' => false, 'DEFAULT' => '0', 'UNSIGNED' => true, 'INDEXES' => array('PRIMARY' => 1)),
+		'id' 	  => array('type' => 'INT(8)',      'NULL' => false, 'DEFAULT' => NULL, 'UNSIGNED' => true, 'INDEXES' => array('PRIMARY' => 1)),
 		'type' 	  => array('type' => 'VARCHAR(32)', 'NULL' => false, 'DEFAULT' => '',),
 	    'message' => array('type' => 'MEDIUMTEXT',  'NULL' => true,  'DEFAULT' => NULL,),
 	);
 
+	/**
+	 * Example of a method in this model
+	 *
+	 * @param string $type
+	 * @param number $message
+	 * @return boolean
+	 */
 	public function addProblem($type='', $message=3) {
 		$this->type = $type;
 		$this->message = $message;
