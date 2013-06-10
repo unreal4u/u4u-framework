@@ -176,6 +176,31 @@ abstract class databaseModel extends queryHandler {
         }
     }
 
+    /**
+     * Creates or edits an LIMIT statement. Deals with unclean data.
+     *
+     * Valid limit and offsets for MySQL are positive integers. So, if a float comes in, this function will round it. If
+     * a negative number is entered, it will be ignored, as it will be if we enter a string instead of a numeric
+     * character. Also, if we want to insert an offset, we MUST have a limit.
+     *
+     * @param int $amount The limit we want to rescue. No default value
+     * @param int $offset The offset we want to begin from. Default value: 0
+     * @return string Returns a formatted string according to input
+     */
+    public function fixLimit($amount=null, $offset=0) {
+        $return = '';
+
+        if (is_numeric($amount) && $amount >= 0) {
+            $return = ' LIMIT '.round($amount);
+
+            // An offset REQUIRES a limit set, so check only if a limit is set
+            if (is_numeric($offset) && !empty($offset) && $offset >= 0) {
+                $return .= ' OFFSET '.round($offset);
+            }
+        }
+
+        return $return;
+    }
 
     /**
      * Saves the object
