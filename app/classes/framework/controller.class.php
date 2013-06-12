@@ -67,7 +67,18 @@ class controller {
     /**
      * Creates an URL from the current controller/action
      */
-    private function createUrlFromController() {
-        return '';
+    protected function createUrlFromController($controller='', $action='') {
+        if (empty($controller)) {
+            $controller = get_called_class();
+        }
+
+        if (empty($action)) {
+            $action = 'action_Login';
+        }
+
+        // Controller and action do have "controller_" and "action_" as prefix
+        // @TODO
+
+        return HOME.$controller.'/'.$action.'/';
     }
 }

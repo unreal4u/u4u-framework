@@ -225,7 +225,7 @@ class appContainer {
     /**
      * Instantiates and configures Smarty for general use
      */
-    public function setupView() {
+    public function setupView($whichView='smarty') {
         $this->includeThirdparty(TP_SMARTY);
         $this->tplManager = new SmartyWrapper($this->options);
 
@@ -317,14 +317,7 @@ class appContainer {
         $controller->linkBasicClasses($this);
         $controller->$methodName();
 
-        $output = '';
-        try {
-            $output = $controller->view->fetch($this->executeModule['view']);
-        } catch (SmartyException $e) {
-            $controller->view->assign('errorMsg', $e->getMessage());
-            $output = $controller->view->fetch('index/error.tpl');
-        }
-        return $output;
+        return $controller->view->fetchTemplate($this->executeModule['view']);
     }
 
     /**

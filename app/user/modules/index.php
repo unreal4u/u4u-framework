@@ -4,7 +4,7 @@ class controller_index extends controller {
     public function action_Index() {
         $this->isPublicPage = true;
         $this->pageTitle = __('Main index');
-        $this->assign('mySpecialVar', 'Hello world!');
+        $this->assign('mySpecialVar', 'This is an assigned variable from PHP!');
 
         $sistProblemIdentifier = new sistProblemIdentifier();
         $sistProblemIdentifier->addProblem('This is a problem!', 4);
@@ -22,7 +22,7 @@ class controller_index extends controller {
 
     public function action_Login() {
         $this->isPublicPage = true;
-        #$this->bc->add($app->myHome, __('Login'));
+        $this->bc->add($this->createUrlFromController(), __('Login'));
 
         return true;
     }
