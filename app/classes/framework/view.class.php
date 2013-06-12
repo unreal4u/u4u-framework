@@ -11,10 +11,7 @@ class view {
      * Constructor
      */
     public function __construct() {
-        $this->he = new \u4u\HTMLUtils();
-        // Artificially close the HTML and BODY tags, not very nice but it will hold it for now
-        $this->he->c_closebody();
-        $this->he->c_closehtml();
+    	#$this->smarty =
     }
 
 	/**

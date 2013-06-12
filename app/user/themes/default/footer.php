@@ -9,10 +9,9 @@ if (APP_ENVIRONMENT === 'dev') {
     }
     print('.</small> ');
     print('<small class="center">' . sprintf(__('Queries: <strong>%d</strong>'), $app->db->executedQueries) . '.</small> ');
-    if ($app->loggedIn === TRUE) {
+    if ($app->loggedIn === true) {
         print('<br /><small class="centrar">' . sprintf(__('Last activity %s second(s) ago. Session renewed for another %s second(s).'), $app->he->c_tag('strong', $app->sessionExpireInformation), $app->he->c_tag('strong', SESION_EXPIRE)) . '</small>');
     }
 }
-
 ?></div>
 </div>

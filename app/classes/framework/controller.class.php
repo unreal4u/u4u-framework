@@ -22,7 +22,7 @@ class controller {
      * Links the basic classes to the controller so that they can be used
      */
     public function linkBasicClasses(appContainer $app=null) {
-        $this->view = new view();
+        $this->view = $app->tplManager;
         $this->bc = $app->bc;
         $this->msgStack = $app->msgStack;
         $this->db = $app->db;

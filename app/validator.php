@@ -37,6 +37,8 @@ $app->validateRoute();
 // Load the framework's options
 $app->loadOptions();
 
+$app->setupView();
+
 if (empty($app->options['installed']) && $app->module != 'install/index') {
     $app->misc->redir(HOME . 'install/');
 }

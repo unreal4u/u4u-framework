@@ -218,6 +218,14 @@ class appContainer {
     }
 
     /**
+     * Instantiates and configures Smarty for general use
+     */
+    public function setupView() {
+        $this->includeThirdparty(TP_SMARTY);
+        $this->tplManager = new SmartyWrapper();
+    }
+
+    /**
      * Includes a third party class from the thirdparty directory
      * @param constant $thirdPartyId The constant name we are trying to include
      */
