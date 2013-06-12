@@ -17,12 +17,4 @@ class smartyWrapper extends Smarty {
             $this->caching = 0;
         }
     }
-
-    public function registerPlugin($pluginName='') {
-        if (!empty($pluginName)) {
-
-        }
-
-        return $this;
-    }
 }

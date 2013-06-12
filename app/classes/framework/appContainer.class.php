@@ -319,10 +319,10 @@ class appContainer {
 
         $output = '';
         try {
-            $output = $controller->view->display($this->executeModule['view']);
+            $output = $controller->view->fetch($this->executeModule['view']);
         } catch (SmartyException $e) {
             $controller->view->assign('errorMsg', $e->getMessage());
-            $output = $controller->view->display('index/error.tpl');
+            $output = $controller->view->fetch('index/error.tpl');
         }
         return $output;
     }
