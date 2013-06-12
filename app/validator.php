@@ -17,11 +17,8 @@ include(CLASSES.'controller.class.php');
 // Create the $app object
 $app = new appContainer();
 
-// Register the most basic classes
-$app->initializeMainObject();
-
-// Include PHPGETTEXT
-$app->includeThirdparty(TP_PHPGETTEXT);
+// Register the most basic classes and include PHP_GETTEXT
+$app->initializeMainObject()->includeThirdparty(TP_PHPGETTEXT);
 
 // @TODO Make this dynamic!
 T_setlocale(LC_MESSAGES, 'es_CL');
@@ -37,16 +34,12 @@ $app->validateRoute();
 // Load the framework's options
 $app->loadOptions();
 
-$app->setupView();
-
 if (empty($app->options['installed']) && $app->module != 'install/index') {
     $app->misc->redir(HOME . 'install/');
 }
 if (empty($app->options['active_theme'])) {
     $app->options['active_theme'] = 'default';
 }
-
-$app->sessionId = session_id();
 
 if (empty($_SESSION['loggedIn'])) {
     $_SESSION['loggedIn'] = false;
@@ -79,9 +72,12 @@ if ($app->loggedIn === true) {
     }
 }
 
+
+
 // Including the base breadcrump
 $app->bc->add(HOME, __('Home'));
-$app->pageContents = $app->execute($app->executeModule);
+// Sets up the view and executes the page... @TODO optimize this later on (the view part)
+$app->pageContents = $app->setupView()->execute();
 
 // After including the page we are trying to visit, some additional checks
 if (!empty($app->isAjaxRequest)) {

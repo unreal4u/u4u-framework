@@ -1,0 +1,1 @@
+<h1 style="color:red">A terrible error has happened. The error is: {$errorMsg}</h1>

@@ -39,12 +39,6 @@ class appContainer {
     public $options = array();
 
     /**
-     * Contains the current session id
-     * @var string
-     */
-    public $session_id = '';
-
-    /**
      * Whether the user is logged in or not. Defaults to false
      * @var boolean
      */
@@ -55,8 +49,9 @@ class appContainer {
      * @var string
      */
     public $loginUsername = '';
+
     /**
-     * The current session id
+     * Contains the current session id
      * @var string
      */
     public $sessionId = '';
@@ -163,6 +158,8 @@ class appContainer {
 
         $this->initializeSession();
         $this->registerBasicClasses();
+
+        return $this;
     }
 
     /**
@@ -173,13 +170,17 @@ class appContainer {
         ini_set("session.gc_maxlifetime", SESION_EXPIRE);
         ini_set("session.entropy_file", "/dev/urandom");
         ini_set("session.entropy_length", "512");
-        session_cache_expire(CACHE_EXPIRE);
+        // Session cache expires is in minutes, also controls Expires: and Cache-Control: max-age headers
+        session_cache_expire(CACHE_EXPIRE / 60);
         session_name(SESION_NAME);
         session_start();
+        $this->sessionId = session_id();
         if (empty($_SESSION['timeout'])) {
-            $this->db->query('INSERT INTO sist_sessions (id_session,ip,useragent) VALUES (?,INET_ATON(?),?)', session_id(), $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
+            $this->db->query('INSERT INTO sist_sessions (id_session,ip,useragent) VALUES (?,INET_ATON(?),?)', $this->sessionId, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
             $_SESSION['timeout'] = time() + SESION_EXPIRE;
         }
+
+        return $this;
     }
 
     /**
@@ -188,12 +189,16 @@ class appContainer {
     private function registerBasicClasses() {
         $this->cache    = $this->u4uAutoLoader->instantiateClass('cacheManager' , array('apc'));
         if (APP_ENVIRONMENT != 'production') {
-            #$this->cache->enableDebugMode();
+            $this->cache->enableDebugMode();
         }
         $this->he       = $this->u4uAutoLoader->instantiateClass('HTMLUtils');
         $this->css      = $this->u4uAutoLoader->instantiateClass('csstacker');
+        $this->u4uAutoLoader->unregisterAutoLoader();
+
         $this->bc       = new breadcrump();
         $this->msgStack = new messageStack();
+
+        return $this;
     }
 
     /**
@@ -222,7 +227,9 @@ class appContainer {
      */
     public function setupView() {
         $this->includeThirdparty(TP_SMARTY);
-        $this->tplManager = new SmartyWrapper();
+        $this->tplManager = new SmartyWrapper($this->options);
+
+        return $this;
     }
 
     /**
@@ -231,6 +238,8 @@ class appContainer {
      */
     public function includeThirdparty($thirdPartyId='') {
         include (THIRDPARTY_DIRECTORY . $thirdPartyId);
+
+        return $this;
     }
 
     /**
@@ -292,7 +301,7 @@ class appContainer {
             $this->cache->save($this->options, 'u4u-siteOptions', array('u4u-internals'), 3600);
         }
 
-        return $this->options;
+        return $this;
     }
 
     /**
@@ -300,14 +309,22 @@ class appContainer {
      *
      * @param array $module
      */
-    public function execute($module) {
-        $controllerName = $module['controller'];
-        $methodName = $module['action'];
+    public function execute() {
+        $controllerName = $this->executeModule['controller'];
+        $methodName = $this->executeModule['action'];
 
         $controller = new $controllerName();
         $controller->linkBasicClasses($this);
         $controller->$methodName();
-        return $controller->view->renderTemplate($module);
+
+        $output = '';
+        try {
+            $output = $controller->view->display($this->executeModule['view']);
+        } catch (SmartyException $e) {
+            $controller->view->assign('errorMsg', $e->getMessage());
+            $output = $controller->view->display('index/error.tpl');
+        }
+        return $output;
     }
 
     /**
