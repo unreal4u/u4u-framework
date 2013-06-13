@@ -26,7 +26,7 @@ with different databases and different setups, but in the meantime you can follo
  <code>git clone git@github.com:unreal4u/u4u-framework.git
 
  cd u4u-framework<code>
-* '''Everything from this point on is just a sketch about how the install *SHOULD* be...'''
+* **Everything from this point on is just a sketch about how the install *SHOULD* be...**
 * Next, make the database and import the initial data (will be replaced with an installer some day):
 
  <code>@TODO</code>
@@ -37,25 +37,25 @@ with different databases and different setups, but in the meantime you can follo
 General Usage
 ------------
 
-This section is still in development!
+**This section is still in development!**
 
-* General considerations
+### General considerations
 
-    This system has been set up taking into account a great versability for the developer and also for the end user. As
-    such, it it designed to serve as a general purpose framework so that you can get your job fastly done and on the
-    other side, maintaining some basic rules, it provides the users with a consistent user experience.
+This system has been set up taking into account a great versability for the developer and also for the end user. As
+such, it it designed to serve as a general purpose framework so that you can get your job fastly done and on the other
+side, maintaining some basic rules, it provides the users with a consistent user experience.
 
-* Users and groups
+### Users and groups
 
-    This system is divided into users, which are always associated in groups. One user can belong to zero or more
-    groups. At the same time, there are also superusers, which have access to every bit in the system and generally
-    override any custom options.
+This system is divided into users, which are always associated in groups. One user can belong to zero or more groups. At
+the same time, there are also superusers, which have access to every bit in the system and generally override any custom
+options.
 
-* Pages
+### Pages
 
-    As a modular system, you can have:
+As a modular system, you can have:
 
-    * Multiple templates for the same logic (A mobile site is just a few templates away now)
-    * Multisite support
-    * Multiple languages support
-    * Etc.
+* Multiple templates for the same logic (A mobile site is just a few templates away now)
+* Multisite support
+* Multiple languages support
+* Etc.
