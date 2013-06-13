@@ -23,16 +23,17 @@ with different databases and different setups, but in the meantime you can follo
 
 * First, check it out and install:
 
- <code>git clone git@github.com:unreal4u/u4u-framework.git
+    <pre>git clone git@github.com:unreal4u/u4u-framework.git
+    cd u4u-framework</pre>
 
- cd u4u-framework<code>
 * **Everything from this point on is just a sketch about how the install *SHOULD* be...**
 * Next, make the database and import the initial data (will be replaced with an installer some day):
 
- <code>@TODO</code>
+    <pre>@TODO</pre>
+
 * Then you should be ready to go the installation program of your newly made app:
 
- <code>http://[YOUR-SERVER]/u4u-framework/www/install/</code>
+ <pre>http://[YOUR-SERVER]/u4u-framework/www/install/</pre>
 
 General Usage
 ------------
