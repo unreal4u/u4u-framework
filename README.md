@@ -22,7 +22,40 @@ Sadly, there is no easy way to install this framework (yet). I might (or not) so
 with different databases and different setups, but in the meantime you can follow the main guidelines:
 
 * First, check it out and install:
+
  <code>git clone git@github.com:unreal4u/u4u-framework.git
+
  cd u4u-framework<code>
-* Next, make the database:
- <code>mysql -u<user> -p</code>
+* '''Everything from this point on is just a sketch about how the install *SHOULD* be...'''
+* Next, make the database and import the initial data (will be replaced with an installer some day):
+
+ <code>@TODO</code>
+* Then you should be ready to go the installation program of your newly made app:
+
+ <code>http://[YOUR-SERVER]/u4u-framework/www/install/</code>
+
+General Usage
+------------
+
+This section is still in development!
+
+* General considerations
+
+    This system has been set up taking into account a great versability for the developer and also for the end user. As
+    such, it it designed to serve as a general purpose framework so that you can get your job fastly done and on the
+    other side, maintaining some basic rules, it provides the users with a consistent user experience.
+
+* Users and groups
+
+    This system is divided into users, which are always associated in groups. One user can belong to zero or more
+    groups. At the same time, there are also superusers, which have access to every bit in the system and generally
+    override any custom options.
+
+* Pages
+
+    As a modular system, you can have:
+
+    * Multiple templates for the same logic (A mobile site is just a few templates away now)
+    * Multisite support
+    * Multiple languages support
+    * Etc.
