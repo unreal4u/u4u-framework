@@ -156,29 +156,10 @@ class appContainer {
             $this->db->keepLiveLog = true;
         }
 
-        $this->initializeSession();
+        $session = new sessionHandler();
+        $session->initializeSession();
+
         $this->registerBasicClasses();
-
-        return $this;
-    }
-
-    /**
-     * Initializes the session
-     */
-    private function initializeSession() {
-        session_cache_limiter('private');
-        ini_set("session.gc_maxlifetime", SESION_EXPIRE);
-        ini_set("session.entropy_file", "/dev/urandom");
-        ini_set("session.entropy_length", "512");
-        // Session cache expires is in minutes, also controls Expires: and Cache-Control: max-age headers
-        session_cache_expire(CACHE_EXPIRE / 60);
-        session_name(SESION_NAME);
-        session_start();
-        $this->sessionId = session_id();
-        if (empty($_SESSION['timeout'])) {
-            $this->db->query('INSERT INTO sist_sessions (id_session,ip,useragent) VALUES (?,INET_ATON(?),?)', $this->sessionId, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
-            $_SESSION['timeout'] = time() + SESION_EXPIRE;
-        }
 
         return $this;
     }

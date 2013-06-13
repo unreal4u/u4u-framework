@@ -34,31 +34,8 @@ $app->validateRoute();
 // Load the framework's options
 $app->loadOptions();
 
-if (empty($app->options['installed']) && $app->module != 'install/index') {
-    $app->misc->redir(HOME . 'install/');
-}
-if (empty($app->options['active_theme'])) {
-    $app->options['active_theme'] = 'default';
-}
-
-if (empty($_SESSION['loggedIn'])) {
-    $_SESSION['loggedIn'] = false;
-} else {
-    if (APP_ENVIRONMENT === 'dev') {
-        $app->sessionExpireInformation = (time() + SESION_EXPIRE) - $_SESSION['timeout'];
-        if ($app->sessionExpireInformation < 0) {
-            $app->sessionExpireInformation = abs($app->sessionExpireInformation) + SESION_EXPIRE;
-        }
-    }
-    if (time() > $_SESSION['timeout']) {
-        $_SESSION['loggedIn'] = false;
-        $app->misc->redir(HOME . 'logout/');
-    } else {
-        $_SESSION['timeout'] = time() + SESION_EXPIRE;
-    }
-}
-
-$app->loggedIn = $_SESSION['loggedIn'];
+$session = new SessionHandler();
+$session->setTimeOut($app);
 
 // Creating CSS class and adding default css file to it
 $app->css->resetCSS = true;
