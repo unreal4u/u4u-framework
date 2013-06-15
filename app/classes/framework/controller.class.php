@@ -7,28 +7,22 @@
  */
 class controller {
     /**
-     * The pagetitle to be displayed
+     * The pagetitle to be displayed. Is only temporary holder because $appContainer will take and print it
      * @var string
      */
-    protected $pageTitle = '';
-
-    /**
-     * The view class which has to do with everything related to the view
-     * @var unknown
-     */
-    public $view = null;
+    public $pageTitle = '';
 
     /**
      * Links the basic classes to the controller so that they can be used
      */
     public function linkBasicClasses(appContainer $app=null) {
-        $this->view = $app->tplManager;
-        $this->bc = $app->bc;
-        $this->msgStack = $app->msgStack;
-        $this->db = $app->db;
-        $this->cache = $app->cache;
-        $this->he = $app->he;
-        $this->css = $app->css;
+        $this->tplManager = $app->tplManager;
+        $this->bc         = $app->bc;
+        $this->msgStack   = $app->msgStack;
+        $this->db         = $app->db;
+        $this->cache      = $app->cache;
+        $this->he         = $app->he;
+        $this->css        = $app->css;
     }
 
     /**
@@ -38,7 +32,7 @@ class controller {
      * @param mixed $variableValue
      */
     public function assign($variableName, $variableValue=null) {
-        $this->view->assign($variableName, $variableValue);
+        $this->tplManager->assign($variableName, $variableValue);
     }
 
     /**

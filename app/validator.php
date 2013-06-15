@@ -42,8 +42,7 @@ $app->css->resetCSS = true;
 $app->css->add(USER_SPACE . 'themes/' . $app->options['active_theme'] . '/css/base.css');
 
 if ($app->loggedIn === true) {
-    $app->id_user = $_SESSION['id_user'];
-    #$app->loginUsername = $_SESSION['loginUsername'];
+    $app->idUser = $_SESSION['idUser'];
     if ($app->setMenuAndCheck() === 1) {
         $this->msgStack->add(2, __('You don\'t have access to any option in the menu and you just will have access to the most basic options.<br />If you believe it\'s a mistake, talk with an administrator.'));
     }
@@ -66,6 +65,7 @@ if (!empty($app->isAjaxRequest)) {
     if ($app->loggedIn && !$app->found && empty($app->isPublicPage)) {
         #$app->misc->redir(HOME . 'no-permission/');
     }
+
     if (!isset($app->isPublicPage) && $app->loggedIn == false) {
         $app->misc->redir(HOME . 'login/');
     }
@@ -78,8 +78,8 @@ if (!$app->loggedIn) {
     #unset($r['submenu']);
 } else {
     #if (empty($app->isAjaxRequest)) {
-    #    $app->misc->logActivity($r['id_user'], 'pag', $_SERVER['REQUEST_URI']);
+    #    $app->misc->logActivity($r['idUser'], 'pag', $_SERVER['REQUEST_URI']);
     #} else if (LOG_AJAX_REQUESTS === true) {
-    #    $app->misc->logActivity($r['id_user'], 'ajx', $_SERVER['REQUEST_URI']);
+    #    $app->misc->logActivity($r['idUser'], 'ajx', $_SERVER['REQUEST_URI']);
     #}
 }

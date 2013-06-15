@@ -47,14 +47,15 @@ if (!empty($app->loadHeaders)) {
     #    }
     #}
     if (empty($app->options['sitename'])) {
-        $app->options['sitename'] = 'u4u Framework';
+        $app->options['sitename'] = __('u4u Framework');
     }
-    if (isset($app->view->pageTitle) and !empty($app->view->pageTitle)) {
-        #$app->view->pageTitle = $app->view->pageTitle . ' &laquo; ' . $app->options['sitename'];
+
+    if (!empty($app->pageTitle)) {
+        $app->pageTitle = $app->pageTitle . ' &laquo; ' . $app->options['sitename'];
     } else {
         #$app->view->pageTitle = 'Inicio &laquo; ' . $app->options['sitename'];
     }
-    #$print .= $app->he->c_title($app->view->pageTitle);
+    print($app->he->c_title($app->pageTitle));
     #if (!empty($r['styles'])) {
     #    $print .= $app->he->c_style($r['styles']);
     #}

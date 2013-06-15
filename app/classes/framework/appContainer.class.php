@@ -77,6 +77,12 @@ class appContainer {
     public $menu = array();
 
     /**
+     * Will be filled in by the controller, this class just takes it over
+     * @var string
+     */
+    public $pageTitle = '';
+
+    /**
      * The contents of the processed and requested page
      * @var string
      */
@@ -297,8 +303,9 @@ class appContainer {
         $controller = new $controllerName();
         $controller->linkBasicClasses($this);
         $controller->$methodName();
+        $this->pageTitle = $controller->pageTitle;
 
-        return $controller->view->fetchTemplate($this->executeModule['view']);
+        return $controller->tplManager->fetchTemplate($this->executeModule['view']);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
 class smartyWrapper extends Smarty {
+    public $pageTitle = '';
+
     public function __construct($sistOptions) {
         parent::__construct();
 

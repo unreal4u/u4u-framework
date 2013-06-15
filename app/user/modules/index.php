@@ -22,6 +22,7 @@ class controller_index extends controller {
 
     public function action_Login() {
         $this->isPublicPage = true;
+        $this->pageTitle = __('Login');
         $this->bc->add($this->createUrlFromController(), __('Login'));
 
         return true;
