@@ -157,7 +157,7 @@ class appContainer {
         }
 
         $session = new sessionHandler();
-        $session->initializeSession();
+        $session->initializeSession($this);
 
         $this->registerBasicClasses();
 

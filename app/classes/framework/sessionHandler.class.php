@@ -6,7 +6,7 @@ class sessionHandler {
      *
      * @return sessionHandler
      */
-    public function initializeSession() {
+    public function initializeSession(appContainer $app) {
         session_cache_limiter('private');
         ini_set("session.gc_maxlifetime", SESION_EXPIRE);
         ini_set("session.entropy_file", "/dev/urandom");
@@ -15,9 +15,9 @@ class sessionHandler {
         session_cache_expire(CACHE_EXPIRE / 60);
         session_name(SESION_NAME);
         session_start();
-        $this->sessionId = session_id();
+        $app->sessionId = session_id();
         if (empty($_SESSION['timeout'])) {
-            $this->db->query('INSERT INTO sist_sessions (id_session,ip,useragent) VALUES (?,INET_ATON(?),?)', $this->sessionId, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
+            $app->db->query('INSERT INTO sist_sessions (id_session,ip,useragent) VALUES (?,INET_ATON(?),?)', $app->sessionId, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
             $_SESSION['timeout'] = time() + SESION_EXPIRE;
         }
 
