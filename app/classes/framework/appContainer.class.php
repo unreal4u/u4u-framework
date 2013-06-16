@@ -199,9 +199,13 @@ class appContainer {
         if (is_readable(CLASSES . $class . '.class.php')) {
             include (CLASSES . $class . '.class.php');
         } else {
+            if (strpos($class, 'models\\') === 0) {
+                $class = str_replace('\\', '/', $class);
+            }
+
             // Loads the models
-            if (is_readable(USER_SPACE.'models/'.$class.'.php')) {
-                include(USER_SPACE.'models/'.$class.'.php');
+            if (is_readable(USER_SPACE.$class.'.php')) {
+                include(USER_SPACE.$class.'.php');
             }
             $return = false;
         }

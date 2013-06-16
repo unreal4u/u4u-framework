@@ -1,4 +1,5 @@
 <?php
+
 use \u4u\cacheManager;
 
 class fieldNotExistsException extends \Exception {}
@@ -12,7 +13,7 @@ class fieldNotExistsException extends \Exception {}
  * @author $Author$
  * @license BSD License. Feel free to use and modify
  */
-abstract class databaseModel extends queryHandler {
+abstract class databaseModel extends \queryHandler {
     /**
      * Holds the current table name
      *
@@ -20,10 +21,10 @@ abstract class databaseModel extends queryHandler {
      */
     private $_tableName = '';
     /**
-	 * Table definition
-	 *
-	 * @var array
-	 */
+     * Table definition
+     *
+     * @var array
+     */
     protected $_fields = array();
 
     /**
@@ -39,16 +40,16 @@ abstract class databaseModel extends queryHandler {
     protected $_primaryKeyFields = array();
 
     /**
-	 * The initial data with which to populate our table
-	 *
-	 * @var array
-	 */
+     * The initial data with which to populate our table
+     *
+     * @var array
+     */
     protected $_initialData = array();
     /**
-	 * What is the class name we are working with
-	 *
-	 * @var string
-	 */
+     * What is the class name we are working with
+     *
+     * @var string
+     */
     private $_extendingClassName = '';
 
     /**
@@ -58,8 +59,8 @@ abstract class databaseModel extends queryHandler {
     protected $databaseFields = array();
 
     /**
-	 * Constructor
-	 */
+     * Constructor
+     */
     public function __construct() {
         $this->_fillBasics();
         // 99% of the time we won't need these fields, so unset them immediatly
@@ -76,7 +77,7 @@ abstract class databaseModel extends queryHandler {
             // Set the table name, first from constant, if that doesn't work, grab it from the class's name
             $databaseDDL['tableName'] = $rc->getConstant('TABLE_NAME');
             if (empty($databaseDDL['tableName'])) {
-                $databaseDDL['tableName'] = $this->_extendingClassName;
+                $databaseDDL['tableName'] = str_replace('models\\', '', $this->_extendingClassName);
             }
 
             // Set the fields
@@ -115,6 +116,33 @@ abstract class databaseModel extends queryHandler {
     }
 
     /**
+     * Constructs the query
+     *
+     * @param boolean $autoUpdate Whether to append ON DUPLICATE KEY UPDATE string or not. Defaults to "false"
+     */
+    private function _constructQuery($autoUpdate=false) {
+        $return = array();
+
+        $query  = 'INSERT INTO `'.$this->_tableName.'` (';
+        $values = '';
+        $duplicate = '';
+
+        foreach ($this->databaseFields as $field => $value) {
+            $return[':'.$field] = $value;
+            $query  .= '`'.$field.'`,';
+            $values .= ':'.$field.',';
+            $duplicate .= '`'.$field.'`=:'.$field.',';
+        }
+
+        $return['q'] = substr($query, 0, -1).') VALUES ('.substr($values, 0, -1).')';
+        if ($autoUpdate === true) {
+            $return['q'] .= ' ON DUPLICATE KEY UPDATE '.substr($duplicate, 0, -1);
+        }
+
+        return $return;
+    }
+
+    /**
      * Setter
      *
      * @param string $name
@@ -143,8 +171,8 @@ abstract class databaseModel extends queryHandler {
     }
 
     /**
-	 * Method that check differences between current table
-	 */
+     * Method that check differences between current table
+     */
     public function systemInstall() {
         // First of all, delete all data from cache and regenerate it
         $cacheManager = new cacheManager('apc');
@@ -166,8 +194,8 @@ abstract class databaseModel extends queryHandler {
     }
 
     /**
-	 * Formats data in array form into the object
-	 */
+     * Formats data in array form into the object
+     */
     public function insertArrayData($initialData) {
         $object = new $$this->extendingClassName();
         foreach ($initialData as $values) {
@@ -203,14 +231,34 @@ abstract class databaseModel extends queryHandler {
     }
 
     /**
+     * Returns objects
+     *
+     * @param array $dataFields
+     * @param array $data
+     */
+    public function loadByProperties(array $dataFields=array(), array $data=array()) {
+        $i = 0;
+        $where = '';
+        foreach ($dataFields as $dataField) {
+            $where .= $this->constructWhere($dataField, $data[$i]);
+        }
+
+        $query = 'SELECT *'.$where;
+    }
+
+    /**
      * Saves the object
      *
+     * @param boolean $autoUpdate Whether to append ON DUPLICATE KEY UPDATE string or not. Defaults to "false"
      * @return boolean Returns true on success save, false otherwise
      */
-    public function save() {
-        $query = $this->generateQuery();
+    public function save($autoUpdate=false) {
+        $queryArray = $this->_constructQuery($autoUpdate);
+        $query = $queryArray['q'];
+        unset($queryArray['q']);
+
         #return $this->insert_id($query, $this->databaseFields);
-        return true;
+        return call_user_func_array(array($this, "insert_id"), array($query, $queryArray));
     }
 }
 

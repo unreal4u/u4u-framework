@@ -6,7 +6,7 @@ class controller_index extends controller {
         $this->pageTitle = __('Main index');
         $this->assign('mySpecialVar', 'This is an assigned variable from PHP!');
 
-        $sistProblemIdentifier = new sistProblemIdentifier();
+        $sistProblemIdentifier = new models\sistProblemIdentifier();
         $sistProblemIdentifier->addProblem('This is a problem!', 4);
         debugFirePHP($sistProblemIdentifier);
 
@@ -24,6 +24,16 @@ class controller_index extends controller {
         $this->isPublicPage = true;
         $this->pageTitle = __('Login');
         $this->bc->add($this->createUrlFromController(), __('Login'));
+
+        if (!empty($_POST['loginUsername']) && !empty($_POST['loginPassword'])) {
+            $oUser = new models\user();
+            $user = $oUser->tryLogin($_POST['loginUsername'], $_POST['loginPassword']);
+            if ($user->id > 0) {
+                // Logged in!
+            } else {
+                // Not login, add msg
+            }
+        }
 
         return true;
     }
