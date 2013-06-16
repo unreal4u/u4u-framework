@@ -126,17 +126,40 @@ abstract class databaseModel extends \queryHandler {
         $query  = 'INSERT INTO `'.$this->_tableName.'` (';
         $values = '';
         $duplicate = '';
+        $returnValues1 = $returnValues2 = array();
 
+        /*
+         * Ideal case scenario, but will have to rewrite db_mysqli class for this to use PDO:
+         */
+        /*
         foreach ($this->databaseFields as $field => $value) {
             $return[':'.$field] = $value;
             $query  .= '`'.$field.'`,';
             $values .= ':'.$field.',';
             $duplicate .= '`'.$field.'`=:'.$field.',';
         }
+        */
+        foreach ($this->databaseFields as $field => $value) {
+            $returnValues1[] = $value;
+            $query .= '`'.$field.'`,';
+            $values .= '?,';
+            if ($autoUpdate === true) {
+                $duplicate .= '`'.$field.'`=?,';
+                $returnValues2[] = $value;
+            }
+        }
 
-        $return['q'] = substr($query, 0, -1).') VALUES ('.substr($values, 0, -1).')';
+
+        $return[0] = substr($query, 0, -1).') VALUES ('.substr($values, 0, -1).')';
+        foreach($returnValues1 AS $returnValue) {
+            $return[] = $returnValue;
+        }
+
         if ($autoUpdate === true) {
-            $return['q'] .= ' ON DUPLICATE KEY UPDATE '.substr($duplicate, 0, -1);
+            $return[0] .= ' ON DUPLICATE KEY UPDATE '.substr($duplicate, 0, -1);
+            foreach($returnValues2 as $returnValue) {
+                $return[] = $returnValue;
+            }
         }
 
         return $return;
@@ -253,12 +276,7 @@ abstract class databaseModel extends \queryHandler {
      * @return boolean Returns true on success save, false otherwise
      */
     public function save($autoUpdate=false) {
-        $queryArray = $this->_constructQuery($autoUpdate);
-        $query = $queryArray['q'];
-        unset($queryArray['q']);
-
-        #return $this->insert_id($query, $this->databaseFields);
-        return call_user_func_array(array($this, "insert_id"), array($query, $queryArray));
+        return call_user_func_array(array($this, "query"), $this->_constructQuery($autoUpdate));
     }
 }
 

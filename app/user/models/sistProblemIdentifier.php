@@ -31,6 +31,6 @@ class sistProblemIdentifier extends \databaseModel {
     public function addProblem($type='', $message=3) {
         $this->type = $type;
         $this->message = $message;
-        return $this->save(true);
+        return $this->save();
     }
 }
