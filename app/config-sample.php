@@ -1,7 +1,11 @@
 <?php
 
+/*
+ * Copy this file to config.php and then adjust the default values
+ */
+
 /**
- * The memory limit, defaults to 16M
+ * The memory limit, defaults to 8M
  * @var string
  */
 const MEMORY_LIMIT = '8M';
