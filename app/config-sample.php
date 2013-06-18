@@ -49,7 +49,7 @@ define ( 'LOCALE_DIR', USER_SPACE.'locale/');
 define ( 'SESION_EXPIRE', 3600 );
 define ( 'CACHE_EXPIRE', 7200 );
 define ( 'SESSION_NAME', 'framework-sesion' );
-define ( 'SESSION_PATH', ABSPATH . 'sessions/' );
+define ( 'SESSION_PATH', ABSPATH . 'cache/sessions/' );
 define ( 'PASSWD_HASH', 'j1tWLoyCxy244I9MvZ5Jgh1sAWpV8Dfd' );
 
 define ( 'CHARSET', 'UTF-8' ); // The charset to use

@@ -164,7 +164,6 @@ class appContainer {
         }
 
         $sessionHandler = new u4uSessionHandler();
-        debug($sessionHandler);
         $sessionHandler->initializeSession($this);
 
         $this->registerBasicClasses();
@@ -176,9 +175,13 @@ class appContainer {
      * The basic classes with which this framework works
      */
     private function registerBasicClasses() {
-        $this->cache    = $this->u4uAutoLoader->instantiateClass('cacheManager' , array('apc'));
-        if (APP_ENVIRONMENT != 'production') {
-            $this->cache->enableDebugMode();
+        try {
+            $this->cache    = $this->u4uAutoLoader->instantiateClass('cacheManager' , array('apc'));
+            if (APP_ENVIRONMENT != 'production') {
+                $this->cache->enableDebugMode();
+            }
+        } catch (Exception $e) {
+            // Do nothing
         }
         $this->he       = $this->u4uAutoLoader->instantiateClass('HTMLUtils');
         $this->css      = $this->u4uAutoLoader->instantiateClass('csstacker');
