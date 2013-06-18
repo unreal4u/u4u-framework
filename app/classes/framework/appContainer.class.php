@@ -181,11 +181,12 @@ class appContainer {
                 $this->cache->enableDebugMode();
             }
         } catch (Exception $e) {
-            // Do nothing
+            // @TODO fix when APC is not enabled, for the moment do nothing
         }
         $this->he       = $this->u4uAutoLoader->instantiateClass('HTMLUtils');
         $this->css      = $this->u4uAutoLoader->instantiateClass('csstacker');
         $this->u4uAutoLoader->unregisterAutoLoader();
+        unset($this->u4uAutoLoader);
 
         $this->bc       = new breadcrump();
         $this->msgStack = new messageStack();
@@ -222,8 +223,15 @@ class appContainer {
      * Instantiates and configures Smarty for general use
      */
     public function setupView($whichView='smarty') {
-        $this->includeThirdparty(TP_SMARTY);
-        $this->tplManager = new SmartyWrapper($this->options);
+        switch ($whichView) {
+            case 'smarty':
+                $this->includeThirdparty(TP_SMARTY);
+                $this->tplManager = new smartyWrapper($this->options);
+            break;
+            default:
+                throw new Exception('View not supported!');
+            break;
+        }
 
         return $this;
     }

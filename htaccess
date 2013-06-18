@@ -1,22 +1,14 @@
 RewriteEngine On
-RewriteBase /~gcl/
+RewriteBase /u4u-framework/www/
 
-RewriteCond %{REQUEST_FILENAME} !-s 
-RewriteCond %{REQUEST_URI} !-d 
-RewriteRule ^([^/]+)/([^/]+)/([^/]+)/([^/]+)/?$ index.php?p=$1&a=$2&b=$3&c=$4 [L,NC]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .*[^/]$ $0/ [L,R=302]
 
-RewriteCond %{REQUEST_FILENAME} !-s 
-RewriteCond %{REQUEST_URI} !-d 
-RewriteRule ^([^/]+)/([^/]+)/([^/]+)/?$ index.php?p=$1&a=$2&b=$3 [L,NC]
+RewriteCond %{REQUEST_FILENAME} !-s
+RewriteCond %{REQUEST_URI} !-d
+RewriteRule ^.*$ index.php?p=$0 [L,NC]
 
-RewriteCond %{REQUEST_FILENAME} !-s 
-RewriteCond %{REQUEST_URI} !-d 
-RewriteRule ^([^/]+)/([^/]+)/?$ index.php?p=$1&a=$2 [L,NC]
-
-RewriteCond %{REQUEST_FILENAME} !-s 
-RewriteCond %{REQUEST_URI} !-d 
-RewriteRule ^([^/]+)/?$ index.php?p=$1 [L,NC]
-
-ErrorDocument 404 http://192.168.0.8/~gcl/not-found/
-ErrorDocument 403 http://192.168.0.8/~gcl/not-found/
+#ErrorDocument 404 http://localhost/u4u-framework/not-found/
+#ErrorDocument 403 http://localhost/u4u-framework/no-permission/
 

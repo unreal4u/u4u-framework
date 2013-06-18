@@ -34,8 +34,8 @@ $app->validateRoute();
 // Load the framework's options
 $app->loadOptions();
 
-$session = new SessionHandler();
-$session->setTimeOut($app);
+$sessionHandler = new u4uSessionHandler();
+$sessionHandler->setTimeOut($app);
 
 // Creating CSS class and adding default css file to it
 $app->css->resetCSS = true;

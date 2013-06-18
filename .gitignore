@@ -3,3 +3,5 @@
 /.buildpath
 *.DS_Store
 /app/config.php
+/app/cache/smarty*
+www/.htaccess
