@@ -44,7 +44,7 @@ class controller_index extends controller {
         // Logout can only if we are logged in
         $this->isPublicPage = false;
         #$this->app->misc->logActivity($r['id_user'], 'lou', 'logout');
-        $sessionHandler = new sessionHandler();
+        $sessionHandler = new u4uSessionHandler();
         $sessionHandler->destroySession();
 
         $this->msgStack->add(3, __('You have been successfully logged out. It is now save to leave the computer'));

@@ -141,6 +141,7 @@ class appContainer {
      */
     public function __construct() {
         $this->timeRequestBegin = microtime(true);
+        chdir(ABSPATH);
 
         $this->locale = setlocale(LC_ALL, 'es_ES', 'es_CL', 'es', 'ES' );
         date_default_timezone_set('America/Santiago');
@@ -162,8 +163,9 @@ class appContainer {
             $this->db->keepLiveLog = true;
         }
 
-        $session = new sessionHandler();
-        $session->initializeSession($this);
+        $sessionHandler = new u4uSessionHandler();
+        debug($sessionHandler);
+        $sessionHandler->initializeSession($this);
 
         $this->registerBasicClasses();
 

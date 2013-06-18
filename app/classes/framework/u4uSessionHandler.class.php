@@ -1,6 +1,11 @@
 <?php
 
-class sessionHandler {
+/**
+ * Handles everything related to sessions
+ *
+ * @author unreal4u
+ */
+class u4uSessionHandler {
     /**
      * Initializes the session
      *
@@ -13,7 +18,8 @@ class sessionHandler {
         ini_set("session.entropy_length", "512");
         // Session cache expires is in minutes, also controls Expires: and Cache-Control: max-age headers
         session_cache_expire(CACHE_EXPIRE / 60);
-        session_name(SESION_NAME);
+        session_name(SESSION_NAME);
+        session_save_path(SESSION_PATH);
         session_start();
         $app->sessionId = session_id();
         if (empty($_SESSION['timeout'])) {
