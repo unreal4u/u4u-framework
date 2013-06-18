@@ -23,6 +23,7 @@ class controller {
         $this->cache      = $app->cache;
         $this->he         = $app->he;
         $this->css        = $app->css;
+        $this->app 		  = $app;
     }
 
     /**

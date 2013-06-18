@@ -25,10 +25,38 @@ class sessionHandler {
     }
 
     /**
+     * Destroys the session
+     *
+     * @param appContainer $app The appContainer
+     * @return boolean Returns always true
+     */
+    public function destroySession(appContainer $app=null) {
+        // @TODO
+        //$logActivity = new models\logs();
+        //$logActivity->log($_SESSION['idUser'], 'lou', 'logout');
+        session_regenerate_id(true);
+        $_SESSION = array();
+        $_SESSION['loggedIn'] = false;
+
+        return true;
+    }
+
+    /**
+     * Destroys and then reinitializes the session
+     *
+     * @param appContainer $app
+     * @return sessionHandler Returns itself
+     */
+    public function reinitializeSession(appContainer $app) {
+        $this->destroySession();
+        return $this->initializeSession($app);
+    }
+
+    /**
      * Deals with timeout in the session and updating logged in and so on
      *
      * @param appContainer $app
-     * @return sessionHandler
+     * @return sessionHandler Returns itself
      */
     public function setTimeout(appContainer $app) {
         if (empty($app->options['installed']) && $app->module != 'install/index') {

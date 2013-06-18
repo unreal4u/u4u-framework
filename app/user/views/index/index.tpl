@@ -1,2 +1,2 @@
-<p><a href="http://localhost/u4u-framework/www/login/" title="">Ir a Login</a></p>
+<p><a href="{buildHref controller='login'}" title="">{"Go to Login page"|gettext}</a></p>
 <p>{$mySpecialVar}</p>
