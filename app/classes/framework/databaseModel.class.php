@@ -67,6 +67,11 @@ abstract class databaseModel extends \queryHandler {
         unset($this->_fields, $this->fields, $this->_initialData);
     }
 
+    /**
+     * Gets all primary fields for the database object
+     *
+     * @return boolean Returns always true
+     */
     private function _fillBasics() {
         $this->_extendingClassName = get_called_class();
         $cacheManager = new cacheManager('apc');

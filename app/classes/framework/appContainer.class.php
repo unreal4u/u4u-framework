@@ -153,6 +153,22 @@ class appContainer {
     }
 
     /**
+     * Destructor
+     */
+    public function __destruct() {
+        $this->timeRequestEnd = microtime(true);
+        if (APP_ENVIRONMENT != 'production') {
+            printf('Total time spent on request: %.5f', ($this->timeRequestEnd - $this->timeRequestBegin));
+        }
+        $this->db = null;
+        $this->he = null;
+        $this->bc = null;
+        $this->msgStack = null;
+        $this->tplManager = null;
+        $this->cache = null;
+    }
+
+    /**
      * Initialize the most basic classes and the session also
      */
     public function initializeMainObject() {
