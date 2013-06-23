@@ -1,5 +1,6 @@
 <?php
 
+use u4u\debugInfo;
 /**
  * The main application container. This class holds the entire application
  *
@@ -140,7 +141,9 @@ class appContainer {
      * Constructor
      */
     public function __construct() {
-        $this->timeRequestBegin = microtime(true);
+        if (APP_ENVIRONMENT != 'production') {
+            $this->timeRequestBegin = microtime(true);
+        }
         chdir(ABSPATH);
 
         $this->locale = setlocale(LC_ALL, 'es_ES', 'es_CL', 'es', 'ES' );
@@ -156,9 +159,11 @@ class appContainer {
      * Destructor
      */
     public function __destruct() {
-        $this->timeRequestEnd = microtime(true);
         if (APP_ENVIRONMENT != 'production') {
-            printf('Total time spent on request: %.5f', ($this->timeRequestEnd - $this->timeRequestBegin));
+            $message = u4u\debugInfo::getDateStamp();
+            $message .= $this->executeModule['controller'].'/'.$this->executeModule['action'];
+            $message .= '; '.__('Time: '.(microtime(true) - $this->timeRequestBegin).' secs');
+            debugFile($message, 'loadTimes.txt', ABSPATH.'cache/logs/');
         }
         $this->db = null;
         $this->he = null;
@@ -238,7 +243,7 @@ class appContainer {
     /**
      * Instantiates and configures Smarty for general use
      */
-    public function setupView($whichView='smarty') {
+    protected function _setupView($whichView='smarty') {
         switch ($whichView) {
             case 'smarty':
                 $this->includeThirdparty(TP_SMARTY);
@@ -249,6 +254,14 @@ class appContainer {
             break;
         }
 
+        return $this;
+    }
+
+    /**
+     * Unloads the view class and associated stuff
+     */
+    protected function _unloadView() {
+        $this->tplManager = null;
         return $this;
     }
 
@@ -329,7 +342,8 @@ class appContainer {
      *
      * @param array $module
      */
-    public function execute() {
+    public function execute($whichView='smarty') {
+        $this->_setupView($whichView);
         $controllerName = $this->executeModule['controller'];
         $methodName = $this->executeModule['action'];
 
@@ -337,8 +351,10 @@ class appContainer {
         $controller->linkBasicClasses($this);
         $controller->$methodName();
         $this->pageTitle = $controller->pageTitle;
+        $this->pageContents = $controller->tplManager->fetchTemplate($this->executeModule['view']);
+        $this->_unloadView();
 
-        return $controller->tplManager->fetchTemplate($this->executeModule['view']);
+        return $this;
     }
 
     /**

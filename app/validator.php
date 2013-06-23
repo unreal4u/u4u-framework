@@ -51,7 +51,7 @@ if ($app->loggedIn === true) {
 // Including the base breadcrump
 $app->bc->add(HOME, __('Home'));
 // Sets up the view and executes the page... @TODO optimize this later on (the view part)
-$app->pageContents = $app->setupView('smarty')->execute();
+$app->execute('smarty');
 
 // After including the page we are trying to visit, some additional checks
 if (!empty($app->isAjaxRequest)) {
