@@ -1,6 +1,6 @@
 <?php
 /**
- * El header, con todas las opciones de construcción
+ * The user defined header
  *
  * @package Internals
  * @author unreal4u
@@ -19,7 +19,10 @@ if (!empty($app->loadHeaders)) {
     }
     print($app->he->c_html());
     if (isset($app->css)) {
-        print($app->he->c_link(HOME.$app->css->printme('filename')));
+        $cssLink = $app->css->printme('filename');
+        if (!empty($cssLink)) {
+            print($app->he->c_link(HOME.$cssLink));
+        }
     } else {
         print($app->he->c_link(HOME . 'js/min.css'));
     }
