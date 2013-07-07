@@ -18,7 +18,9 @@ class uriHandler {
      * @var array
      */
     public $notFound = array(
-        'request' => 'index/not-found/', 'controller' => 'controller_index', 'action' => 'action_NotFound'
+        'request' => 'index/not-found/',
+        'controller' => 'controller_index',
+        'action' => 'action_NotFound',
     );
 
     /**

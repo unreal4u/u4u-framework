@@ -9,7 +9,7 @@ class controller_index extends controller {
 
     public function action_Index() {
         $this->pageTitle = __('Main index');
-        $this->assign('mySpecialVar', 'This is an assigned variable from PHP!');
+        $this->assign('mySpecialVar', __('This is an assigned variable from PHP!'));
 
         $sistProblemIdentifier = new models\sistProblemIdentifier();
         $sistProblemIdentifier->addProblem('This is a problem!... '.mt_rand(0, 1000), 4);

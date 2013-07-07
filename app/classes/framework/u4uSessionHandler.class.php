@@ -75,7 +75,7 @@ class u4uSessionHandler {
         if (empty($_SESSION['loggedIn'])) {
             $_SESSION['loggedIn'] = false;
         } else {
-            if (APP_ENVIRONMENT === 'dev') {
+            if (APP_ENVIRONMENT != 'production') {
                 $app->sessionExpireInformation = (time() + SESION_EXPIRE) - $_SESSION['timeout'];
                 if ($app->sessionExpireInformation < 0) {
                     $app->sessionExpireInformation = abs($app->sessionExpireInformation) + SESION_EXPIRE;

@@ -69,7 +69,7 @@ if (!empty($app->isAjaxRequest)) {
     if (!isset($app->isPublicPage) && $app->loggedIn == false) {
         $app->misc->redir(HOME . 'login/');
     }
-    #if (APP_ENVIRONMENT === 'dev' and !in_array(2, $_SESSION['id_grp'])) {
+    #if (APP_ENVIRONMENT != 'production' and !in_array(2, $_SESSION['id_grp'])) {
     #    $app->misc->redir(HOME . 'no-permission/');
     #}
 }

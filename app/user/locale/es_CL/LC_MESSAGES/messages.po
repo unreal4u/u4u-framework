@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: framework u4u\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-13 01:52+0100\n"
-"PO-Revision-Date: 2013-06-13 01:55+0100\n"
+"POT-Creation-Date: 2013-07-07 03:51+0100\n"
+"PO-Revision-Date: 2013-07-07 03:53+0100\n"
 "Last-Translator: Camilo Sperberg <me@unreal4u.com>\n"
 "Language-Team: unreal4u\n"
 "Language: es_CL\n"
@@ -15,6 +15,10 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: /var/www/html/u4u-framework\n"
+
+#: /var/www/html/u4u-framework/app/c_header.php:53
+msgid "u4u Framework"
+msgstr "Framework de u4u"
 
 #: /var/www/html/u4u-framework/app/handler-errors.php:59
 msgid "We're sorry, but an error happened"
@@ -32,12 +36,15 @@ msgid ""
 "This error has been saved so that an administrator can check it. However, "
 "you can write to <a href=\"mailto:%s\">%s</a> to report it."
 msgstr ""
+"Este error ha sido guardado para que de esta forma un administrador lo pueda "
+"controlar. Sin embargo, puede escribir a <a href=\"mailto:%s\">%s</a> para "
+"reportarlo"
 
 #: /var/www/html/u4u-framework/app/handler-errors.php:62
 msgid "Back to home"
-msgstr ""
+msgstr "Volver a inicio"
 
-#: /var/www/html/u4u-framework/app/validator.php:71
+#: /var/www/html/u4u-framework/app/validator.php:47
 msgid ""
 "You don't have access to any option in the menu and you just will have "
 "access to the most basic options.<br />If you believe it's a mistake, talk "
@@ -47,11 +54,11 @@ msgstr ""
 "acceso a las opciones más básicas.<br />Si cree que es un error, notifique a "
 "un administrador."
 
-#: /var/www/html/u4u-framework/app/validator.php:76
+#: /var/www/html/u4u-framework/app/validator.php:52
 msgid "Home"
 msgstr "Inicio"
 
-#: /var/www/html/u4u-framework/app/validator.php:86
+#: /var/www/html/u4u-framework/app/validator.php:62
 msgid "Access denied"
 msgstr "Acceso denegado"
 
@@ -70,6 +77,14 @@ msgstr "Contraseña:"
 msgid "Accept"
 msgstr "Aceptar"
 
+#: /var/www/html/u4u-framework/app/cache/smarty/templates_c/88e2bfb177557861a2155652cd0710e53da2c8cb.file.index.tpl.php:26
+msgid "Go to Login page"
+msgstr "Ir a Login"
+
+#: /var/www/html/u4u-framework/app/classes/framework/appContainer.class.php:165
+msgid "Time: "
+msgstr "Tiempo: "
+
 #: /var/www/html/u4u-framework/app/classes/framework/breadcrump.class.php:70
 #, php-format
 msgid "Click to see %s"
@@ -80,6 +95,8 @@ msgid ""
 "This is how the story goes.\n"
 "\n"
 msgstr ""
+"Así es como va la historia\n"
+"\n"
 
 #: /var/www/html/u4u-framework/app/user/modules/admin.php:5
 msgid "Administration Panel"
@@ -90,32 +107,36 @@ msgid "Welcome to the administration panel"
 msgstr "Bienvenido al panel de administración"
 
 #: /var/www/html/u4u-framework/app/user/modules/admin.php:10
-#, fuzzy
 msgid "Change password"
 msgstr "Cambiar Contraseña"
 
-#: /var/www/html/u4u-framework/app/user/modules/index.php:6
+#: /var/www/html/u4u-framework/app/user/modules/index.php:11
 msgid "Main index"
 msgstr "Índice Principal"
 
-#: /var/www/html/u4u-framework/app/user/modules/index.php:25
+#: /var/www/html/u4u-framework/app/user/modules/index.php:12
+msgid "This is an assigned variable from PHP!"
+msgstr "¡Esta es una variable asignada desde PHP!"
+
+#: /var/www/html/u4u-framework/app/user/modules/index.php:27
+#: /var/www/html/u4u-framework/app/user/modules/index.php:28
 msgid "Login"
 msgstr "Logearse"
 
-#: /var/www/html/u4u-framework/app/user/modules/index.php:36
+#: /var/www/html/u4u-framework/app/user/modules/index.php:50
 msgid ""
 "You have been successfully logged out. It is now save to leave the computer"
 msgstr "Usted ha sido deslogeado. Puede abandonar la computadora ahora"
 
-#: /var/www/html/u4u-framework/app/user/modules/index.php:44
+#: /var/www/html/u4u-framework/app/user/modules/index.php:57
 msgid "403 Forbidden access"
 msgstr "403 Acceso prohibido"
 
-#: /var/www/html/u4u-framework/app/user/modules/index.php:47
+#: /var/www/html/u4u-framework/app/user/modules/index.php:60
 msgid "It is also possible that this page is under development right now"
 msgstr "También es posible que esta página esté bajo desarrollo ahora"
 
-#: /var/www/html/u4u-framework/app/user/modules/index.php:54
+#: /var/www/html/u4u-framework/app/user/modules/index.php:66
 msgid "404 Not found"
 msgstr "404 No encontrado"
 
@@ -125,19 +146,19 @@ msgstr "Errores de sistema"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/errors.php:4
 msgid "You can check here for all errors made by the system."
-msgstr ""
+msgstr "Puedes revisar acá para ver todos los errores hechos por el sistema"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/groups.php:14
 msgid "Roles Modification"
-msgstr ""
+msgstr "Modificación de roles"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/menu.php:8
 msgid "Menu administrator"
-msgstr ""
+msgstr "Menú del administrador"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/site-options.php:11
 msgid "Edit Site Options"
-msgstr ""
+msgstr "Editar opciones del sitio"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/site-options.php:12
 msgid "Site options"
@@ -145,15 +166,15 @@ msgstr "Opciones del sitio"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/site-options.php:14
 msgid "Choose the site option and edit the value"
-msgstr ""
+msgstr "Elija las opción del sitio y edite su valor"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/site-options.php:18
 msgid "Option successfully updated"
-msgstr ""
+msgstr "Opción actualizada con éxito"
 
 #: /var/www/html/u4u-framework/app/user/modules/framework-admin/traffic-detail.php:9
 msgid "Traffic detail per users"
-msgstr ""
+msgstr "Detalle de tráfico por usuario"
 
 #: /var/www/html/u4u-framework/app/user/themes/default/footer.php:3
 #, php-format
@@ -179,7 +200,7 @@ msgstr "Pique:"
 #: /var/www/html/u4u-framework/app/user/themes/default/footer.php:11
 #, php-format
 msgid "Queries: <strong>%d</strong>"
-msgstr ""
+msgstr "Consultas: <strong>%d</strong>"
 
 #: /var/www/html/u4u-framework/app/user/themes/default/footer.php:13
 #, php-format
@@ -209,9 +230,6 @@ msgstr "Salir"
 
 #~ msgid "Hello world!"
 #~ msgstr "¡Hola mundo!"
-
-#~ msgid "Go to login"
-#~ msgstr "Ir a Login"
 
 #~ msgid "User not found or password not equal. Please try again."
 #~ msgstr ""

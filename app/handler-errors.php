@@ -72,7 +72,7 @@ function dramas($errno = '0', $errstr = 'Error General', $errfile = 'N/A', $errl
     $contenido_error .= $app->he->pre($CSSErrors,FALSE);
     $contenido_error .= $app->he->pre($dbErrors,FALSE);
     $contenido_error .= '</p>';
-    if (APP_ENVIRONMENT === 'dev') echo $contenido_error;
+    if (APP_ENVIRONMENT != 'production') echo $contenido_error;
     if ($errline == 'N/A') $errline = 0;
     $user_id = 0;
     if (is_array($errctx)) if (!empty($errctx['clean']['user_id'])) $user_id = $errctx['clean']['user_id'];

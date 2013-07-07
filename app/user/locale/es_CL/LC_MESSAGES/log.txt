@@ -1,2 +1,0 @@
-03:01:16: /private/var/www/html/framework/inc/locale/es_ES/LC_MESSAGES/messages.po:30:130: invalid control sequence
-03:01:16: /Applications/Otros/Poedit.app/Contents/MacOS/msgfmt: found 1 fatal error

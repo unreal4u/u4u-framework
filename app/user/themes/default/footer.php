@@ -1,7 +1,7 @@
 </div>
 <div id="footer"><?php
 print($app->he->c_tag('p', sprintf(__('This is the footer. You can create a new theme based on %sthemes/default/'), ABSPATH)));
-if (APP_ENVIRONMENT === 'dev') {
+if (APP_ENVIRONMENT != 'production') {
     print($app->he->c_tag('small', sprintf(__('Page generated in %s seconds.'), $app->he->c_tag('strong', number_format(microtime(true) - $app->timeRequestBegin, 6, '.', ','))), 'center'));
     print('&nbsp;<small class="center">' . __('Typ. Memory: ') . $app->he->c_tag('strong', round(memory_get_usage() / 1024)) . 'KiB');
     if (version_compare(PHP_VERSION, '5.2.0', '>')) {
