@@ -171,7 +171,7 @@ class appContainer {
         }
 
         $this->sessionHandler = new u4uSessionHandler();
-        $this->sessionHandler->initializeSession($this)->setTimeout($this);
+        $this->sessionHandler->initializeSession($this);
 
         $this->registerBasicClasses();
 
@@ -320,6 +320,7 @@ class appContainer {
             $this->cache->save($this->options, 'u4u-siteOptions', array('u4u-internals'), 3600);
         }
 
+        $this->sessionHandler->setTimeout($this);
         return $this;
     }
 
