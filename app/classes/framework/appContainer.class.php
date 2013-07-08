@@ -46,18 +46,6 @@ class appContainer {
     public $loggedIn = false;
 
     /**
-     * The current logged in user name
-     * @var string
-     */
-    public $loginUsername = '';
-
-    /**
-     * Contains the current session id
-     * @var string
-     */
-    public $sessionId = '';
-
-    /**
      * Internal pointer to know whether the requested page has been found or not. Don't mess with this
      * @var boolean
      */
@@ -68,8 +56,6 @@ class appContainer {
      * @var array
      */
     public $executeModule = '';
-    public $id_user;
-    public $sessionExpireInformation = 0;
 
     /**
      * Contains the left menu
@@ -126,16 +112,16 @@ class appContainer {
     public $isPublicPage = false;
 
     /**
-     * Don't remember, fill in later
-     * @var unknown
-     */
-    public $development;
-
-    /**
      * Autoloader and instantiator of u4u classes
      * @var object
      */
     private $u4uAutoLoader = null;
+
+    /**
+     * Contains the session class
+     * @var object
+     */
+    private $sessionHandler = null;
 
     /**
      * Constructor
@@ -184,8 +170,8 @@ class appContainer {
             $this->db->keepLiveLog = true;
         }
 
-        $sessionHandler = new u4uSessionHandler();
-        $sessionHandler->initializeSession($this);
+        $this->sessionHandler = new u4uSessionHandler();
+        $this->sessionHandler->initializeSession($this)->setTimeout($this);
 
         $this->registerBasicClasses();
 
