@@ -183,11 +183,12 @@ class appContainer {
      */
     private function registerBasicClasses() {
         try {
-            $this->cache    = $this->u4uAutoLoader->instantiateClass('cacheManager' , array('apc'));
+            $this->cache = $this->u4uAutoLoader->instantiateClass('cacheManager', array('apc', false));
             if (APP_ENVIRONMENT != 'production') {
                 $this->cache->enableDebugMode();
             }
-        } catch (Exception $e) {
+        } catch (u4u\cacheException $e) {
+            $this->cache = $this->u4uAutoLoader->instantiateClass('cacheManager', array('default'));
             // @TODO fix when APC is not enabled, for the moment do nothing
         }
         $this->he       = $this->u4uAutoLoader->instantiateClass('HTMLUtils');

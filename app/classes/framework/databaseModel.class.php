@@ -74,7 +74,11 @@ abstract class databaseModel extends \queryHandler {
      */
     private function _fillBasics() {
         $this->_extendingClassName = get_called_class();
-        $cacheManager = new cacheManager('apc');
+        try {
+            $cacheManager = new cacheManager('apc');
+        } catch (u4u\cacheException $e) {
+            $cacheManager = new cacheManager('default');
+        }
         $databaseDDL = $cacheManager->load('u4u-databaseDDL', array('u4u-internals', 'class' => $this->_extendingClassName));
         if ($databaseDDL === false) {
             $databaseDDL = array();
