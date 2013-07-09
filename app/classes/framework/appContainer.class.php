@@ -276,7 +276,7 @@ class appContainer {
     /**
      * Checks, sets and validates the module/controller we are trying to load
      *
-     * @return string The definite route of the file we want to load
+     * @return appContainer The appContainer object
      */
     public function validateRoute() {
         $return = '';
@@ -301,13 +301,13 @@ class appContainer {
         $uriHandler->includeController($return['controller']);
 
         $this->executeModule = $return;
-        return $return;
+        return $this;
     }
 
     /**
      * Loads all options from the database or cache
      *
-     * @return array Returns an array with all options
+     * @return appContainer The appContainer object
      */
     public function loadOptions() {
         $this->options = $this->cache->load('u4u-siteOptions', array('u4u-internals'));

@@ -1,7 +1,7 @@
 <?php
 /**
  * Module description
- * 
+ *
  * @package General
  * @version $Rev$
  * @copyright $Date$
@@ -10,16 +10,16 @@
  */
 
 class temp extends databaseModel {
-	protected $fields = array(
-		'id_user' 		=> array('type' => INT, 		'length' => 11, 					 										'auto_increment' => TRUE, 	'unsigned' => TRUE, 	'zerofill' => FALSE, 																'keys' => array('PRIMARY'), 										),
-		'login'			=> array('type' => VARCHAR, 	'length' => 24, 																					 	'unsigned' => FALSE, 	'zerofill' => FALSE, 	'charset' => 'utf8', 	'collation' => 'utf8_general_ci', 	'keys' => array('UNI_login'),										),
-		'passwd'		=> array('type' => CHAR, 		'length' => 32,																						 	'unsigned' => FALSE, 	'zerofill' => FALSE, 	'charset' => 'ascii',	'collation' => 'ascii_bin',																				),
-		'salt_hash'		=> array('type' => CHAR, 		'length' => 32, 	'NULL' => FALSE, 	'default' => '', 																								'charset' => 'ascii',	'collation' => 'ascii_bin',											'comment' => 'A random salt hash',	),
-		'first_name' 	=> array('type' => VARCHAR,		'length' => 96,		'NULL' => TRUE, 																																																													),
-		'last_name'		=> array('type' => VARCHAR, 	'length' => 128,	'NULL' => TRUE,																																																														),
-		'created'		=> array('type' => TIMESTAMP, 					 	'NULL' => FALSE, 	'default' => 'CURRENT_TIMESTAMP',																																																				),
-		'active'		=> array('type' => BIT, 							'NULL' => FALSE, 	'default' => 'TRUE', 																																																							),
-	);
+    protected $fields = array(
+        'id_user' 		=> array('type' => INT, 		'length' => 11, 					 										'auto_increment' => TRUE, 	'unsigned' => TRUE, 	'zerofill' => FALSE, 																'INDEXES' => array('PRIMARY'), 										),
+        'login'			=> array('type' => VARCHAR, 	'length' => 24, 																					 	'unsigned' => FALSE, 	'zerofill' => FALSE, 	'charset' => 'utf8', 	'collation' => 'utf8_general_ci', 	'INDEXES' => array('UNI_login'),									),
+        'passwd'		=> array('type' => CHAR, 		'length' => 32,																						 	'unsigned' => FALSE, 	'zerofill' => FALSE, 	'charset' => 'ascii',	'collation' => 'ascii_bin',																				),
+        'salt_hash'		=> array('type' => CHAR, 		'length' => 32, 	'NULL' => FALSE, 	'default' => '', 																								'charset' => 'ascii',	'collation' => 'ascii_bin',											'comment' => 'A random salt hash',	),
+        'first_name' 	=> array('type' => VARCHAR,		'length' => 96,		'NULL' => TRUE, 																																																													),
+        'last_name'		=> array('type' => VARCHAR, 	'length' => 128,	'NULL' => TRUE,																																																														),
+        'created'		=> array('type' => TIMESTAMP, 					 	'NULL' => FALSE, 	'default' => 'CURRENT_TIMESTAMP',																																																				),
+        'active'		=> array('type' => BIT, 							'NULL' => FALSE, 	'default' => 'TRUE', 																																																							),
+    );
 }
 
 

@@ -12,7 +12,7 @@ class controller_index extends controller {
         $this->assign('mySpecialVar', __('This is an assigned variable from PHP!'));
 
         $sistProblemIdentifier = new models\sistProblemIdentifier();
-        $sistProblemIdentifier->addProblem('This is a problem!... '.mt_rand(0, 1000), 4);
+        //$sistProblemIdentifier->addProblem('This is a problem!... '.mt_rand(0, 1000), 4);
 
         return true;
     }

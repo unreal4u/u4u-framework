@@ -28,11 +28,8 @@ if (function_exists('bind_textdomain_codeset')) {
 }
 textdomain('messages');
 
-// Find out what we must load
-$app->validateRoute();
-
-// Load the framework's options
-$app->loadOptions();
+// Find out what we must load and load the framework's options
+$app->validateRoute()->loadOptions();
 
 // Creating CSS class and adding default css file to it
 $app->css->resetCSS = true;

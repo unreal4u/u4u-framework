@@ -20,40 +20,6 @@ class misc {
     }
 
     /**
-     * This function generates a password salt as a string of x (default = 15) characters ranging from a-zA-Z0-9.
-     *
-     * @author AfroSoft <scripts@afrosoft.co.cc>
-     *
-     * @param int $max The number of characters in the string
-     * @return string The generated salt
-     */
-    private function generateSalt($max=32) {
-        $characterList = "<>|abcdefghijklmnopqrstuvwxyz\\!#$%ABCDEFGHIJKLMNOPQRSTUVWXYZ_-/&()0123456789.[]{}";
-        $i = 0;
-        $salt = "";
-        do {
-            $salt .= $characterList{mt_rand(0, strlen($characterList) - 1)};
-            $i++;
-        } while ($i <= $max);
-        return md5((time() + microtime()) . PASSWD_HASH . $salt);
-    }
-
-    /**
-     * Generates a secure password from user input
-     *
-     * @param string $passwd The password user created
-     * @return array The encrypted password and the hash for the password
-     */
-    public function createPassword($passwd) {
-        $passwd = trim(htmlentities($passwd));
-        $hash = $this->generateSalt();
-        return array(
-            'passwd' => md5(substr($passwd, 0, round(strlen($passwd) / 2)) . $hash . substr($passwd, round(strlen($passwd) / 2))),
-            'hash' => $hash,
-        );
-    }
-
-    /**
      * Redirects the user to another page
      *
      * @param string $where Where to redirect
