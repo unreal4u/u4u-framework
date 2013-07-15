@@ -9,13 +9,16 @@
  *
  * Author: Camilo Sperberg - http://unreal4u.com/
  */
-include(dirname(__FILE__).'/config.php');
-include(THIRDPARTY_DIRECTORY.'enabled-thirdparty-extensions.php');
-include(CLASSES.'appContainer.class.php');
-include(CLASSES.'controller.class.php');
+
+chdir(dirname(__FILE__));
+include(rtrim(dirname(__FILE__), '/').'/classes/framework/appContainer.class.php');
 
 // Create the $app object
 $app = new appContainer();
+$app->loadConfiguration('user/configurations/default');
+
+include(THIRDPARTY_DIRECTORY.'enabled-thirdparty-extensions.php');
+include(CLASSES.'controller.class.php');
 
 // Register the most basic classes and include PHP_GETTEXT
 $app->initializeMainObject()->includeThirdparty(TP_PHPGETTEXT);

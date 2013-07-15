@@ -1,8 +1,13 @@
 <?php
 
-class smartyWrapper extends Smarty {
+class smartyWrapper extends \Smarty {
     public $pageTitle = '';
 
+    /**
+     * Constructor, sets all options
+     *
+     * @param array $sistOptions
+     */
     public function __construct($sistOptions) {
         parent::__construct();
 
@@ -13,18 +18,23 @@ class smartyWrapper extends Smarty {
         $this->setCacheDir(ABSPATH . $sistOptions['smartyCacheDir']);
         $this->cache_lifetime = CACHE_EXPIRE;
 
-        if (APP_ENVIRONMENT == 'production') {
-            $this->caching = 1;
-        } else {
+        $this->caching = 1;
+        if (APP_ENVIRONMENT != 'production') {
             $this->caching = 0;
         }
     }
 
+    /**
+     * Fetches a template. If error present, returns error template
+     *
+     * @param string $tplLocation
+     * @return string
+     */
     public function fetchTemplate($tplLocation='') {
         $output = '';
         try {
             $output = $this->fetch($tplLocation);
-        } catch (SmartyException $e) {
+        } catch (\SmartyException $e) {
             $this->assign('errorMsg', $e->getMessage());
             $output = $this->fetch('index/error.tpl');
         }

@@ -124,21 +124,16 @@ class appContainer {
     private $sessionHandler = null;
 
     /**
+     * Contains the configuration class
+     * @var object
+     */
+    private $_configuration = null;
+
+    /**
      * Constructor
      */
     public function __construct() {
-        if (APP_ENVIRONMENT != 'production') {
-            $this->timeRequestBegin = microtime(true);
-        }
-        chdir(ABSPATH);
-
-        $this->locale = setlocale(LC_ALL, 'es_ES', 'es_CL', 'es', 'ES' );
-        date_default_timezone_set('America/Santiago');
-
-        spl_autoload_register(array(
-            $this,
-            'autoloadHandler'
-        ));
+        // TODO
     }
 
     /**
@@ -160,9 +155,57 @@ class appContainer {
     }
 
     /**
+     * Throws an ErrorException
+     *
+     * @param int $errno
+     * @param string $errstr
+     * @param string $errfile
+     * @param int $errline
+     * @throws ErrorException
+     */
+    public function exceptionErrorHandler($errno=null, $errstr=null, $errfile=null, $errline=null) {
+        // @TODO Do something with severity other than to pass just the errno
+        throw new \ErrorException($errstr, $errno, $errno, $errfile, $errline);
+    }
+
+    /**
+     * Loads the base configuration
+     * @param string $configurationName
+     */
+    public function loadConfiguration($configurationName='user/configurations/default') {
+        if (!isset($this->_configuration)) {
+            include('classes/framework/configuration.class.php');
+        }
+        if (is_readable($configurationName.'.conf.php')) {
+            include($configurationName.'.conf.php');
+            $className = '\\configuration\\'.substr($configurationName, strrpos($configurationName, '/') + 1).'Configuration';
+            $this->_configuration = new $className();
+            $this->_configuration->setOptions();
+            $this->_configuration->mergeConfiguration($this->_configuration->options);
+            $this->_configuration->convertToConstants();
+        }
+    }
+
+    /**
      * Initialize the most basic classes and the session also
      */
     public function initializeMainObject() {
+        if (APP_ENVIRONMENT != 'production') {
+            $this->timeRequestBegin = microtime(true);
+        }
+        chdir(ABSPATH);
+
+        $this->locale = setlocale(LC_ALL, 'es_ES', 'es_CL', 'es', 'ES' );
+        date_default_timezone_set('America/Santiago');
+
+        spl_autoload_register(array(
+            $this,
+            'autoloadHandler'
+        ));
+
+        // Set all errors to our own exception error handler
+        set_error_handler(array(get_class(), 'exceptionErrorHandler'));
+
         $this->includeThirdparty(U4U_CLASSES);
         $this->u4uAutoLoader   = new \u4u\autoLoader();
         $this->db              = $this->u4uAutoLoader->instantiateClass('db_mysqli');
@@ -213,15 +256,20 @@ class appContainer {
         if (is_readable(CLASSES . $class . '.class.php')) {
             include (CLASSES . $class . '.class.php');
         } else {
-            if (strpos($class, 'models\\') === 0) {
-                $class = str_replace('\\', '/', $class);
+            $positionNamespace = strpos($class, '\\');
+            if ($positionNamespace !== 0) {
+                switch(substr($class, 0, $positionNamespace)) {
+                    case 'models':
+                        $class = str_replace('\\', '/', $class);
+                        if (is_readable(USER_SPACE.$class.'.php')) {
+                            include(USER_SPACE.$class.'.php');
+                        }
+                    break;
+                }
+            } else {
+                // If no classes were found, return false
+                $return = false;
             }
-
-            // Loads the models
-            if (is_readable(USER_SPACE.$class.'.php')) {
-                include(USER_SPACE.$class.'.php');
-            }
-            $return = false;
         }
 
         return $return;
@@ -279,7 +327,7 @@ class appContainer {
      * @return appContainer The appContainer object
      */
     public function validateRoute() {
-        $return = '';
+        $return = false;
 
         $uriHandler = new uriHandler();
         // Check if we can retrieve the to-be-loaded module from cache

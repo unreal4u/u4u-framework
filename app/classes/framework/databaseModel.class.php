@@ -79,6 +79,7 @@ abstract class databaseModel extends \queryHandler {
         } catch (u4u\cacheException $e) {
             $cacheManager = new cacheManager('default');
         }
+
         $databaseDDL = $cacheManager->load('u4u-databaseDDL', array('u4u-internals', 'class' => $this->_extendingClassName));
         if ($databaseDDL === false) {
             $databaseDDL = array();
@@ -288,4 +289,3 @@ abstract class databaseModel extends \queryHandler {
         return call_user_func_array(array($this, "query"), $this->_constructQuery($autoUpdate));
     }
 }
-
