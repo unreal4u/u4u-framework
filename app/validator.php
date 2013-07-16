@@ -15,6 +15,7 @@ include(rtrim(dirname(__FILE__), '/').'/classes/framework/appContainer.class.php
 
 // Create the $app object
 $app = new appContainer();
+// @TODO Make this dynamic!
 $app->loadConfiguration('user/configurations/default');
 
 include(THIRDPARTY_DIRECTORY.'enabled-thirdparty-extensions.php');

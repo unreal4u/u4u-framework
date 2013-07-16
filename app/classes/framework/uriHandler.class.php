@@ -83,12 +83,37 @@ class uriHandler {
      */
     private function createModuleArray($request, $controller, $action) {
         $return['request'] = $request;
-        $return['controller'] = 'controller_'.$controller;
-        $return['action'] = $action;
-        $return['view'] = $controller.'/'.str_replace('action_', '', strtolower($action)).'.tpl';
+        $return['controller'] = 'controller_'.$this->_stripController($controller);
+        $return['action'] = 'action_'.$this->_stripAction($action);
+        $return['view'] = $this->_stripController($controller).'/'.$this->_stripAction($action, true).'.tpl';
         $return['abspath'] = CONTROLLERS . $controller . '.php';
 
         return $return;
+    }
+
+    /**
+     * Strips the "controller_" part of the controller
+     *
+     * @param string $controller
+     * @return string
+     */
+    private function _stripController($controller) {
+        return str_replace('controller_', '', $controller);
+    }
+
+    /**
+     * Strips the "action_" part of the action
+     *
+     * @param string $action The action to strip from
+     * @param boolean $lowerLetters Whether to lower the action. Defaults to false
+     * @return string
+     */
+    private function _stripAction($action, $lowerLetters=false) {
+        if (!empty($lowerLetters)) {
+            $action = strtolower($action);
+        }
+
+        return str_replace('action_', '', $action);
     }
 
     /**

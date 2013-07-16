@@ -12,16 +12,26 @@ class smartyWrapper extends \Smarty {
         parent::__construct();
 
         $this->setTemplateDir(USER_SPACE . 'views/');
-        $this->setCompileDir(ABSPATH . $sistOptions['smartyCompileDir']);
-        $this->setPluginsDir(array(CLASSES.'framework/smarty/plugins/framework', CLASSES.'framework/smarty/plugins/thirdparty'));
-        $this->setConfigDir(ABSPATH . $sistOptions['smartyConfigDir']);
-        $this->setCacheDir(ABSPATH . $sistOptions['smartyCacheDir']);
+        $this->setCompileDir(realpath(ABSPATH . $sistOptions['smartyCompileDir']));
+        $this->setPluginsDir(array(
+            CLASSES.'framework/smarty/plugins/framework',
+            CLASSES.'framework/smarty/plugins/thirdparty',
+        ));
+        $this->setConfigDir(realpath(ABSPATH . $sistOptions['smartyConfigDir']));
+        $this->setCacheDir(realpath(ABSPATH . $sistOptions['smartyCacheDir']));
         $this->cache_lifetime = CACHE_EXPIRE;
 
         $this->caching = 1;
         if (APP_ENVIRONMENT != 'production') {
             $this->caching = 0;
         }
+
+        $this->muteExpectedErrors();
+    }
+
+    public function __destruct() {
+        $this->unmuteExpectedErrors();
+        parent::__destruct();
     }
 
     /**

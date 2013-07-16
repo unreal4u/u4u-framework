@@ -1,5 +1,5 @@
 <div id="wrapper"><div id="header"><?php
-printf(__('This is the header. You can create a new theme based on %sthemes/default/'), ABSPATH);
+printf(__('This is the header. You can create a new theme based on %s'), realpath(ABSPATH.'user/themes/default/'));
 ?></div><div id="page"><?php
 #include(USER_SPACE.'themes/default/submenu.php');
 #include(USER_SPACE.'themes/default/leftmenu.php');

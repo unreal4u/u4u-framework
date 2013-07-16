@@ -141,7 +141,7 @@ class appContainer {
      */
     public function __destruct() {
         if (APP_ENVIRONMENT != 'production') {
-            $message = u4u\debugInfo::getDateStamp();
+            $message = u4u\debugInfo::convertTimestamp();
             $message .= $this->executeModule['controller'].'/'.$this->executeModule['action'];
             $message .= '; '.__('Time: '.(microtime(true) - $this->timeRequestBegin).' secs');
             debugFile($message, 'loadTimes.txt', ABSPATH.'cache/logs/');
