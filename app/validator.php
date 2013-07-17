@@ -15,27 +15,20 @@ include(rtrim(dirname(__FILE__), '/').'/classes/framework/appContainer.class.php
 
 // Create the $app object
 $app = new appContainer();
+
+// Loads the configuration
 // @TODO Make this dynamic!
 $app->loadConfiguration('user/configurations/default');
 
 include(THIRDPARTY_DIRECTORY.'enabled-thirdparty-extensions.php');
 include(CLASSES.'controller.class.php');
 
-// Register the most basic classes and include PHP_GETTEXT
-$app->initializeMainObject()->includeThirdparty(TP_PHPGETTEXT);
+// Register the most basic classes
+$app->initializeMainObject();
 
+// Locale settings
 // @TODO Make this dynamic!
-#T_setlocale(LC_MESSAGES, 'es_CL');
-#bindtextdomain('messages', LOCALE_DIR);
-#if (function_exists('bind_textdomain_codeset')) {
-#    bind_textdomain_codeset('messages', CHARSET);
-#}
-#textdomain('messages');
-
-putenv("LC_ALL=es_CL");
-setlocale(LC_ALL, 'es_CL');
-bindtextdomain("messages", "./locale");
-textdomain("messages");
+$app->setLocale('es_CL');
 
 // Find out what we must load and load the framework's options
 $app->validateRoute()->loadOptions();

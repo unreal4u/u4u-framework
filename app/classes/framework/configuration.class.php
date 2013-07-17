@@ -58,7 +58,7 @@ abstract class baseConfiguration {
 
         // More basic stuff, related mainly with paths
         $this->_baseConfig['HOME'] = 'http://localhost'.$this->_baseConfig['REWRITE_BASE'];
-        $this->_baseConfig['ABSPATH'] = rtrim(dirname(__FILE__), '/').'/../../';
+        $this->_baseConfig['ABSPATH'] = rtrim(realpath(rtrim(dirname(__FILE__), '/').'/../../'), '/').'/';
         $this->_baseConfig['HOMEPAGE'] = 'index/index/'; // module / controller
         $this->_baseConfig['CLASSES'] = $this->_baseConfig['ABSPATH'].'classes/framework/';
         $this->_baseConfig['THIRDPARTY_DIRECTORY'] = $this->_baseConfig['ABSPATH'].'classes/thirdparty/';
@@ -67,7 +67,7 @@ abstract class baseConfiguration {
         $this->_baseConfig['LOCALE_DIR'] = $this->_baseConfig['USER_SPACE'].'locale/';
 
         // Public section
-        $this->_baseConfig['PUBLICROOT'] = $this->_baseConfig['ABSPATH'].'../'.$this->_baseConfig['PUBLIC_FOLDERNAME'].'/';
+        $this->_baseConfig['PUBLICROOT'] = rtrim(realpath($this->_baseConfig['ABSPATH'].'../'.$this->_baseConfig['PUBLIC_FOLDERNAME']), '/').'/';
         $this->_baseConfig['IMAG'] = 'im/';
         $this->_baseConfig['JSCR'] = 'js/';
 

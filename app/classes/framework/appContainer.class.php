@@ -276,6 +276,26 @@ class appContainer {
     }
 
     /**
+     * Sets the locale
+     *
+     * @param string $locale The locale we want to set
+     * @return boolean Returns true if locale exists, false otherwise
+     */
+    public function setLocale($locale='en_US') {
+        if (!file_exists(LOCALE_DIR.$locale)) {
+            $locale = 'en_US';
+        }
+
+        putenv('LC_ALL='.$locale);
+        setlocale(LC_ALL, $locale);
+        bindtextdomain('messages', LOCALE_DIR);
+        bind_textdomain_codeset('messages', CHARSET);
+        textdomain('messages');
+
+        return true;
+    }
+
+    /**
      * Instantiates and configures Smarty for general use
      */
     protected function _setupView($whichView='smarty') {
