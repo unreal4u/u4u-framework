@@ -23,7 +23,7 @@ class breadcrump {
         if (!empty($frase)) {
             $this->salida = $frase;
         } else {
-            $this->salida = 'Usted est&aacute; en:&nbsp;';
+            $this->salida = _('You are at:&nbsp;');
         }
         $this->num = 0;
         return TRUE;
@@ -67,7 +67,7 @@ class breadcrump {
                 if ($i != 0) {
                     $resultado .= '&nbsp;' . $this->separator . '&nbsp;';
                 }
-                $resultado .= '<a href="' . $a[0] . '" title="'.sprintf(__('Click to see %s'), $a[1]).'">' . $a[1] . '</a>';
+                $resultado .= '<a href="'.$a[0].'" title="'.sprintf(_('Click to see %s'), $a[1]).'">'.$a[1].'</a>';
                 $i++;
             }
             $resultado .= $posterior;

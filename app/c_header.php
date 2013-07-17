@@ -50,7 +50,7 @@ if (!empty($app->loadHeaders)) {
     #    }
     #}
     if (empty($app->options['sitename'])) {
-        $app->options['sitename'] = __('u4u Framework');
+        $app->options['sitename'] = _('u4u Framework');
     }
 
     if (!empty($app->pageTitle)) {

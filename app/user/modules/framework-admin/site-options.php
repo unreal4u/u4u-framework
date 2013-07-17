@@ -8,14 +8,14 @@
  * @author $Author$
  */
 
-$app->view->pageTitle = __('Edit Site Options');
-$app->bc->add($app->myHome, __('Site options'));
+$app->view->pageTitle = _('Edit Site Options');
+$app->bc->add($app->myHome, _('Site options'));
 
-echo $app->misc->c_title($app->view->pageTitle, __('Choose the site option and edit the value'));
+echo $app->misc->c_title($app->view->pageTitle, _('Choose the site option and edit the value'));
 if (!empty($_POST['option_name'])) {
     $_SESSION['custom']['option_name'] = $_POST['option_name'];
     $app->db->query('UPDATE sist_options SET v = ? WHERE name = ? AND id_option = ?', $_POST['option_value'], $_POST['option_name'], 'sop');
-    $app->msgStack->add(3, __('Option successfully updated'));
+    $app->msgStack->add(3, _('Option successfully updated'));
     $app->cache->purgeIdentifierCache('siteOptions');
     $app->misc->redir($app->myHome);
 }

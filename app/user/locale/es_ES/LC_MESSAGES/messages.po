@@ -2,145 +2,258 @@ msgid ""
 msgstr ""
 "Project-Id-Version: framework u4u\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-04 15:45+0100\n"
-"PO-Revision-Date: 2011-11-07 12:15+0100\n"
+"POT-Creation-Date: 2013-07-17 03:29+0100\n"
+"PO-Revision-Date: 2013-07-17 03:30+0100\n"
 "Last-Translator: Camilo Sperberg <me@unreal4u.com>\n"
 "Language-Team: unreal4u\n"
+"Language: es_CL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;gettext;gettext_noop\n"
-"X-Poedit-Basepath: /var/www/html/framework/\n"
-"X-Poedit-Language: Spanish\n"
-"X-Poedit-Country: CHILE\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-SearchPath-0: /var/www/html/framework\n"
+"X-Poedit-Basepath: /home/unreal4u/html/u4u-framework/\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: /home/unreal4u/html/u4u-framework\n"
 
-#: /var/www/html/framework/inc/handler-errors.php:59
-msgid "We're sorry, but an error happened"
-msgstr "Lo sentimos, pero ocurrió un error"
+#: /home/unreal4u/html/u4u-framework/app/validator.php:50
+msgid ""
+"You don't have access to any option in the menu and you just will have "
+"access to the most basic options.<br />If you believe it's a mistake, talk "
+"with an administrator."
+msgstr ""
+"No tiene acceso a opción alguna en el menú y sólo tendrá acceso a las "
+"opciones más básicas del sistema.<br />Si cree que es un error, hable con el "
+"administrador."
 
-#: /var/www/html/framework/inc/handler-errors.php:60
-msgid "There's been an internal error that prevents the page from loading correctly."
-msgstr "Ha habido un error interno que evita que la página se cargue de forma adecuada"
+#: /home/unreal4u/html/u4u-framework/app/validator.php:56
+msgid "Home"
+msgstr "Inicio"
 
-#: /var/www/html/framework/inc/handler-errors.php:61
-#, php-format
-msgid "This error has been saved so that an administrator can check it. However, you can write to <a href=\"mailto:%s\">%s</a> to report it."
-msgstr "Este error ha sido salvado para que un administrador lo pueda revisar. Sin embargo, puede escribir a <a href=\"mailto:%s\">%s</a> para reportarlo."
-
-#: /var/www/html/framework/inc/handler-errors.php:62
-msgid "Back to home"
-msgstr "Volver a Inicio"
-
-#: /var/www/html/framework/inc/validator.php:136
-msgid "You don't have access to any option in the menu and you just will have access to the most basic options.<br />If you believe it's a mistake, talk with an administrator."
-msgstr "No tiene acceso a opción alguna en el menú y sólo tendrá acceso a las opciones más básicas del sistema.<br />Si cree que es un error, hable con el administrador."
-
-#: /var/www/html/framework/inc/validator.php:156
+#: /home/unreal4u/html/u4u-framework/app/validator.php:66
 msgid "Access denied"
 msgstr "Acceso Denegado"
 
-#: /var/www/html/framework/inc/pags/admin-grp.php:14
-msgid "Roles Modification"
-msgstr "Modificación de Grupos"
+#: /home/unreal4u/html/u4u-framework/app/handler-errors.php:59
+msgid "We're sorry, but an error happened"
+msgstr "Lo sentimos, pero ocurrió un error"
 
-#: /var/www/html/framework/inc/pags/admin.php:3
-msgid "Administration Panel"
-msgstr "Panel de Administración"
+#: /home/unreal4u/html/u4u-framework/app/handler-errors.php:60
+msgid ""
+"There's been an internal error that prevents the page from loading correctly."
+msgstr ""
+"Ha habido un error interno que evita que la página se cargue de forma "
+"adecuada"
 
-#: /var/www/html/framework/inc/pags/admin.php:5
-msgid "Welcome to the administration panel"
-msgstr "Bienvenido al panel de administración"
-
-#: /var/www/html/framework/inc/pags/ajax.php:16
-msgid "Couldn't load ajax request."
-msgstr "No se pudo cargar las opciones"
-
-#: /var/www/html/framework/inc/pags/detalle-trafico.php:14
-msgid "Traffic detail per users"
-msgstr "Detalle de tráfico por usuarios"
-
-#: /var/www/html/framework/inc/pags/index.php:4
-msgid "Main index"
-msgstr "Inicio"
-
-#: /var/www/html/framework/inc/pags/index.php:6
-msgid "Hello world!"
-msgstr "Hola mundo!"
-
-#: /var/www/html/framework/inc/pags/index.php:7
-msgid "Go to login"
-msgstr "Ir a logearse"
-
-#: /var/www/html/framework/inc/pags/login.php:4
-msgid "Login"
-msgstr "Ingresar"
-
-#: /var/www/html/framework/inc/pags/login.php:34
-msgid "User not found or password not equal. Please try again."
-msgstr "Usuario no encontrado o contraseña no coincidente. Por favor intente nuevamente."
-
-#: /var/www/html/framework/inc/pags/login.php:37
-msgid "Password not equal. Please try again."
-msgstr "La contraseña no coincide. Por favor intente nuevamente."
-
-#: /var/www/html/framework/inc/pags/login.php:40
+#: /home/unreal4u/html/u4u-framework/app/handler-errors.php:61
 #, php-format
-msgid "An unknown error happened (%d). Please notify the sysadmin."
-msgstr "Un error desconocido (%d) ocurrió. Por favor notifique al administrador de sistemas."
+msgid ""
+"This error has been saved so that an administrator can check it. However, "
+"you can write to <a href=\"mailto:%s\">%s</a> to report it."
+msgstr ""
+"Este error ha sido salvado para que un administrador lo pueda revisar. Sin "
+"embargo, puede escribir a <a href=\"mailto:%s\">%s</a> para reportarlo."
 
-#: /var/www/html/framework/inc/pags/login.php:49
-msgid "Please enter your credentials to continue."
-msgstr "Por favor ingrese sus datos para continuar."
+#: /home/unreal4u/html/u4u-framework/app/handler-errors.php:62
+msgid "Back to home"
+msgstr "Volver a Inicio"
 
-#: /var/www/html/framework/inc/pags/login.php:52
-msgid "Username"
-msgstr "Nombre de usuario"
+#: /home/unreal4u/html/u4u-framework/app/c_header.php:53
+msgid "u4u Framework"
+msgstr "Framework de u4u"
 
-#: /var/www/html/framework/inc/pags/login.php:52
-msgid "Password"
-msgstr "Contraseña"
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/footer.php:3
+#, php-format
+msgid "This is the footer. You can create a new theme based on %s"
+msgstr "Este es el pie de página. Puede crear un nuevo tema basado en %s"
 
-#: /var/www/html/framework/inc/pags/login.php:52
-msgid "Enter"
-msgstr "Entrar"
-
-#: /var/www/html/framework/inc/themes/default/footer.php:4
-msgid "This is the footer. You can edit this at inc/themes/default/footer.php"
-msgstr "Este es el pie de página. Puede editar este texto en inc/themes/default/footer.php"
-
-#: /var/www/html/framework/inc/themes/default/footer.php:6
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/footer.php:5
 #, php-format
 msgid "Page generated in %s seconds."
 msgstr "Página generada en %s segundos."
 
-#: /var/www/html/framework/inc/themes/default/footer.php:10
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/footer.php:6
 msgid "Typ. Memory: "
 msgstr "Memoria Típ.: "
 
-#: /var/www/html/framework/inc/themes/default/footer.php:11
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/footer.php:8
 msgid "Pike: "
 msgstr "Pique: "
 
-#: /var/www/html/framework/inc/themes/default/footer.php:21
-msgid "Queries: "
-msgstr "Consultas: "
-
-#: /var/www/html/framework/inc/themes/default/footer.php:25
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/footer.php:11
 #, php-format
-msgid "Last activity %s second(s) ago. Session renewed for another %s second(s)."
-msgstr "Última actividad hace %s segundo(s). Sesión renovada por otros %s segundo(s)."
+msgid "Queries: <strong>%d</strong>"
+msgstr "Consultas: <strong>%d</strong>"
 
-#: /var/www/html/framework/inc/themes/default/header.php:3
-msgid "This is the header. You can edit this at inc/themes/default/header.php"
-msgstr "Esta es la cabecera. Puede editar esta página en /inc/themes/default/header.php"
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/footer.php:13
+#, php-format
+msgid ""
+"Last activity %s second(s) ago. Session renewed for another %s second(s)."
+msgstr ""
+"Última actividad hace %s segundo(s). Sesión renovada por otros %s segundo(s)."
 
-#: /var/www/html/framework/inc/themes/default/submenu.php:22
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/submenu.php:22
 msgid "Change Password"
 msgstr "Cambiar Contraseña"
 
-#: /var/www/html/framework/inc/themes/default/submenu.php:23
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/submenu.php:25
 msgid "Logout"
 msgstr "Salir"
 
+#: /home/unreal4u/html/u4u-framework/app/user/themes/default/header.php:2
+#, php-format
+msgid "This is the header. You can create a new theme based on %s"
+msgstr "Esta es la cabecera. Puede crear un nuevo tema basado en %s"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:11
+msgid "Main index"
+msgstr "Inicio"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:12
+msgid "This is an assigned variable from PHP!"
+msgstr "¡Esta es una variable asignada desde PHP!"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:27
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:28
+msgid "Login"
+msgstr "Ingresar"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:50
+msgid ""
+"You have been successfully logged out. It is now save to leave the computer"
+msgstr ""
+"Usted se ha deslogeado exitosamente. Es seguro abandonar el ordenador ahora"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:57
+msgid "403 Forbidden access"
+msgstr "403 Acceso Prohibido"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:60
+msgid "It is also possible that this page is under development right now"
+msgstr "También es posible que esta página esté bajo desarrollo ahora"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/index.php:66
+msgid "404 Not found"
+msgstr "404 No Encontrado"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/admin.php:5
+msgid "Administration Panel"
+msgstr "Panel de Administración"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/admin.php:6
+msgid "Welcome to the administration panel"
+msgstr "Bienvenido al panel de administración"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/admin.php:10
+msgid "Change password"
+msgstr "Cambiar Contraseña"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/menu.php:8
+msgid "Menu administrator"
+msgstr "Menú del administrador"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/errors.php:3
+msgid "System errors"
+msgstr "Errores del sistema"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/errors.php:4
+msgid "You can check here for all errors made by the system."
+msgstr "Puede revisar acá por todos los errores hechos por el sistema"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/groups.php:14
+msgid "Roles Modification"
+msgstr "Modificación de Grupos"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/site-options.php:11
+msgid "Edit Site Options"
+msgstr "Editar opciones del sitio"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/site-options.php:12
+msgid "Site options"
+msgstr "Opciones del sitio"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/site-options.php:14
+msgid "Choose the site option and edit the value"
+msgstr "Elija la opción del sitio y edite el valor"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/site-options.php:18
+msgid "Option successfully updated"
+msgstr "Opción actualizada exitosamente"
+
+#: /home/unreal4u/html/u4u-framework/app/user/modules/framework-admin/traffic-detail.php:9
+msgid "Traffic detail per users"
+msgstr "Detalle de tráfico por usuarios"
+
+#: /home/unreal4u/html/u4u-framework/app/classes/framework/appContainer.class.php:146
+#, php-format
+msgid "Time: %.6f secs"
+msgstr "Tiempo: %.6f segs"
+
+#: /home/unreal4u/html/u4u-framework/app/classes/framework/breadcrump.class.php:26
+msgid "You are at:&nbsp;"
+msgstr "Usted está en:&nbsp;"
+
+#: /home/unreal4u/html/u4u-framework/app/classes/framework/breadcrump.class.php:70
+#, php-format
+msgid "Click to see %s"
+msgstr "Click para ver %s"
+
+#: /home/unreal4u/html/u4u-framework/app/cache/smarty/templates_c/12aa4d52aa4785022eb622cebb63a569ce2b8ed3.file.index.tpl.php:26
+msgid "Go to Login page"
+msgstr "Ir a logearse"
+
+#: /home/unreal4u/html/u4u-framework/app/cache/smarty/templates_c/f6a5b32c10d7c0ca6aafec174161b740f306fbc3.file.notfound.tpl.php:22
+msgid "We are sorry but this page hasn't been found... better luck next time!"
+msgstr ""
+"Lo sentimos pero esta página no ha podido ser encontrada... ¡mejor suerte "
+"para la próxima!"
+
+#: /home/unreal4u/html/u4u-framework/app/cache/smarty/templates_c/ac450cf81a061912c724dd5ec3fbb4846154e76f.file.login.tpl.php:25
+msgid "User name:"
+msgstr "Nombre de usuario:"
+
+#: /home/unreal4u/html/u4u-framework/app/cache/smarty/templates_c/ac450cf81a061912c724dd5ec3fbb4846154e76f.file.login.tpl.php:30
+msgid "Password:"
+msgstr "Contraseña:"
+
+#: /home/unreal4u/html/u4u-framework/app/cache/smarty/templates_c/ac450cf81a061912c724dd5ec3fbb4846154e76f.file.login.tpl.php:35
+msgid "Accept"
+msgstr "Aceptar"
+
+#~ msgid ""
+#~ "This is how the story goes.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Así es como va la historia\n"
+#~ "\n"
+
+#~ msgid "Time: "
+#~ msgstr "Tiempo: "
+
+#~ msgid "Couldn't load ajax request."
+#~ msgstr "No se pudo cargar las opciones"
+
+#~ msgid "Hello world!"
+#~ msgstr "Hola mundo!"
+
+#~ msgid "User not found or password not equal. Please try again."
+#~ msgstr ""
+#~ "Usuario no encontrado o contraseña no coincidente. Por favor intente "
+#~ "nuevamente."
+
+#~ msgid "Password not equal. Please try again."
+#~ msgstr "La contraseña no coincide. Por favor intente nuevamente."
+
+#~ msgid "An unknown error happened (%d). Please notify the sysadmin."
+#~ msgstr ""
+#~ "Un error desconocido (%d) ocurrió. Por favor notifique al administrador "
+#~ "de sistemas."
+
+#~ msgid "Please enter your credentials to continue."
+#~ msgstr "Por favor ingrese sus datos para continuar."
+
+#~ msgid "Enter"
+#~ msgstr "Entrar"
+
+#~ msgid "Queries: "
+#~ msgstr "Consultas: "

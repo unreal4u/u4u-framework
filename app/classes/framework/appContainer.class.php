@@ -141,9 +141,9 @@ class appContainer {
      */
     public function __destruct() {
         if (APP_ENVIRONMENT != 'production') {
-            $message = u4u\debugInfo::convertTimestamp();
+            $message = '['.u4u\debugInfo::convertTimestamp().'] ';
             $message .= $this->executeModule['controller'].'/'.$this->executeModule['action'];
-            $message .= '; '.__('Time: '.(microtime(true) - $this->timeRequestBegin).' secs');
+            $message .= '; '.sprintf(_('Time: %.6f secs'), (microtime(true) - $this->timeRequestBegin));
             debugFile($message, 'loadTimes.txt', ABSPATH.'cache/logs/');
         }
         $this->db = null;
@@ -239,7 +239,7 @@ class appContainer {
         $this->u4uAutoLoader->unregisterAutoLoader();
         unset($this->u4uAutoLoader);
 
-        $this->bc       = new breadcrump();
+        //$this->bc       = new breadcrump();
         $this->msgStack = new messageStack();
 
         return $this;

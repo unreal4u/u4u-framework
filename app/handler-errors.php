@@ -56,10 +56,10 @@ function dramas($errno = '0', $errstr = 'Error General', $errfile = 'N/A', $errl
 
     ob_start();
     include(RUTA.INCL.'header.php');
-    echo $app->he->c_tag('h1',__('We\'re sorry, but an error happened'));
-    echo $app->he->c_tag('h2',__('There\'s been an internal error that prevents the page from loading correctly.'));
-    echo $app->he->c_tag('h2',sprintf(__('This error has been saved so that an administrator can check it. However, you can write to <a href="mailto:%s">%s</a> to report it.'),$_SERVER['SERVER_ADMIN'],$_SERVER['SERVER_ADMIN']));
-    echo $app->he->c_tag('p',$app->he->c_href(HOME,__('Back to home')),'center');
+    echo $app->he->c_tag('h1',_('We\'re sorry, but an error happened'));
+    echo $app->he->c_tag('h2',_('There\'s been an internal error that prevents the page from loading correctly.'));
+    echo $app->he->c_tag('h2',sprintf(_('This error has been saved so that an administrator can check it. However, you can write to <a href="mailto:%s">%s</a> to report it.'),$_SERVER['SERVER_ADMIN'],$_SERVER['SERVER_ADMIN']));
+    echo $app->he->c_tag('p',$app->he->c_href(HOME,_('Back to home')),'center');
     $contenido = ob_get_contents();
     ob_end_clean();
 

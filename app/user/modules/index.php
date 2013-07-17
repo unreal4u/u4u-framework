@@ -8,8 +8,8 @@ class controller_index extends controller {
     public $isPublicPage = true;
 
     public function action_Index() {
-        $this->pageTitle = __('Main index');
-        $this->assign('mySpecialVar', __('This is an assigned variable from PHP!'));
+        $this->pageTitle = _('Main index');
+        $this->assign('mySpecialVar', _('This is an assigned variable from PHP!'));
 
         //$sistProblemIdentifier = new models\sistProblemIdentifier();
         //$sistProblemIdentifier->addProblem('This is a problem!... '.mt_rand(0, 1000), 4);
@@ -18,14 +18,14 @@ class controller_index extends controller {
     }
 
     public function action_Install() {
-        #$this->misc->c_title(__('System installation'), __('This page will execute a serie of steps in order to install the system'));
+        #$this->misc->c_title(_('System installation'), _('This page will execute a serie of steps in order to install the system'));
 
         return true;
     }
 
     public function action_Login() {
-        $this->pageTitle = __('Login');
-        $this->bc->add($this->createUrlFromController(), __('Login'));
+        $this->pageTitle = _('Login');
+        $this->bc->add($this->createUrlFromController(), _('Login'));
 
         if (!empty($_POST['loginUsername']) && !empty($_POST['loginPassword'])) {
             $oUser = new models\user();
@@ -47,27 +47,27 @@ class controller_index extends controller {
         $sessionHandler = new u4uSessionHandler();
         $sessionHandler->destroySession();
 
-        $this->msgStack->add(3, __('You have been successfully logged out. It is now save to leave the computer'));
+        $this->msgStack->add(3, _('You have been successfully logged out. It is now save to leave the computer'));
         $this->misc->redir(HOME.'login/');
 
         return true;
     }
 
     public function action_NoPermission() {
-        $this->pageTitle = __('403 Forbidden access');
+        $this->pageTitle = _('403 Forbidden access');
         header('x', true, 403);
-        #$this->misc->c_title(__('We are sorry, but you have no permission to see this page'), sprintf(__('Please, %s to choose the right option'), $this->he->c_href(HOME,__('go back to our index'))));
-        $this->he->c_tag('p',__('It is also possible that this page is under development right now'));
+        #$this->misc->c_title(_('We are sorry, but you have no permission to see this page'), sprintf(_('Please, %s to choose the right option'), $this->he->c_href(HOME,_('go back to our index'))));
+        $this->he->c_tag('p',_('It is also possible that this page is under development right now'));
 
         return true;
     }
 
     public function action_NotFound() {
-        $this->pageTitle = __('404 Not found');
+        $this->pageTitle = _('404 Not found');
         header('x', true, 404);
         #$app->misc->logActivity($r['id_user'], '404', $_SERVER['REQUEST_URI']);
-        #$this->misc->c_title(__('We are sorry, but what you are looking for isn\'t here'), sprintf(__('Please, %s to choose the right option'), $this->he->c_href(HOME,__('go back to our index'))));
-        #$this->he->c_tag('p',__('It is also possible that this page is under development right now'));
+        #$this->misc->c_title(_('We are sorry, but what you are looking for isn\'t here'), sprintf(_('Please, %s to choose the right option'), $this->he->c_href(HOME,_('go back to our index'))));
+        #$this->he->c_tag('p',_('It is also possible that this page is under development right now'));
 
         return true;
     }

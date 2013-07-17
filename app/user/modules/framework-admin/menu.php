@@ -5,7 +5,7 @@
  * @package General
  * @author Camilo Sperberg
  */
-$app->view->pageTitle = __('Menu administrator');
+$app->view->pageTitle = _('Menu administrator');
 $app->javascriptCode[] = 'function ex(a,b){var s=true;if(a==\'d\'){s=confirm(\'Confirma que desea eliminar este registro?\');};if(s==true){$("#num_mod").val(b);$("#accion").val(a);$("#grupo").val($("#grp_"+b).val());$("#link").val($("#lnk_"+b).val());$("#descripcion").val($("#dsc_"+b).val());$("#orden").val($("#ord_"+b).val());if($("#vis_"+b).is(":checked")){$("#visible").val(1);}else{$("#visible").val(0);};$("#ppal").submit();};};';
 echo $app->misc->c_title($app->view->pageTitle, 'Esta p&aacute;gina sirve para administrar los men&uacute;es del sistema');
 if (isset($_POST['accion'])) {

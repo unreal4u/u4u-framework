@@ -25,12 +25,17 @@ include(CLASSES.'controller.class.php');
 $app->initializeMainObject()->includeThirdparty(TP_PHPGETTEXT);
 
 // @TODO Make this dynamic!
-T_setlocale(LC_MESSAGES, 'es_CL');
-bindtextdomain('messages', LOCALE_DIR);
-if (function_exists('bind_textdomain_codeset')) {
-    bind_textdomain_codeset('messages', CHARSET);
-}
-textdomain('messages');
+#T_setlocale(LC_MESSAGES, 'es_CL');
+#bindtextdomain('messages', LOCALE_DIR);
+#if (function_exists('bind_textdomain_codeset')) {
+#    bind_textdomain_codeset('messages', CHARSET);
+#}
+#textdomain('messages');
+
+putenv("LC_ALL=es_CL");
+setlocale(LC_ALL, 'es_CL');
+bindtextdomain("messages", "./locale");
+textdomain("messages");
 
 // Find out what we must load and load the framework's options
 $app->validateRoute()->loadOptions();
@@ -42,12 +47,13 @@ $app->css->add(USER_SPACE . 'themes/' . $app->options['active_theme'] . '/css/ba
 if ($app->loggedIn === true) {
     $app->idUser = $_SESSION['idUser'];
     if ($app->setMenuAndCheck() === 1) {
-        $this->msgStack->add(2, __('You don\'t have access to any option in the menu and you just will have access to the most basic options.<br />If you believe it\'s a mistake, talk with an administrator.'));
+        $this->msgStack->add(2, _('You don\'t have access to any option in the menu and you just will have access to the most basic options.<br />If you believe it\'s a mistake, talk with an administrator.'));
     }
 }
 
+$app->bc = new breadcrump();
 // Including the base breadcrump
-$app->bc->add(HOME, __('Home'));
+$app->bc->add(HOME, _('Home'));
 // Sets up the view and executes the page... @TODO optimize this later on (the view part)
 $app->execute('smarty');
 
@@ -57,7 +63,7 @@ if (!empty($app->isAjaxRequest)) {
     $app->he->c_closebody();
     $app->he->c_closehtml();
     if (!isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], HOME) === false) {
-        die(__('Access denied'));
+        die(_('Access denied'));
     }
 } else {
     if ($app->loggedIn && !$app->found && empty($app->isPublicPage)) {

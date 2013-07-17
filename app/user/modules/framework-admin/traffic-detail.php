@@ -6,7 +6,7 @@
  * @author Camilo Sperberg
  */
 define('RESULTADOS_POR_PAGINA', 100);
-$app->view->pageTitle = __('Traffic detail per users');
+$app->view->pageTitle = _('Traffic detail per users');
 $cmd = '';
 if (isset($_GET['a'])) {
     $cmd = $_GET['a'];

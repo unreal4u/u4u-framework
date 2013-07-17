@@ -26,11 +26,11 @@ class smartyWrapper extends \Smarty {
             $this->caching = 0;
         }
 
-        $this->muteExpectedErrors();
+        #$this->muteExpectedErrors();
     }
 
     public function __destruct() {
-        $this->unmuteExpectedErrors();
+        #$this->unmuteExpectedErrors();
         parent::__destruct();
     }
 

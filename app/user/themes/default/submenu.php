@@ -19,10 +19,10 @@ $Author: unreal4u $
  */
 if ($app->loggedIn) {
     $r['submenu'][] = array(
-        'link' => 'passwd/', 'txt' => __('Change Password'), 'spec' => TRUE
+        'link' => 'passwd/', 'txt' => _('Change Password'), 'spec' => TRUE
     );
     $r['submenu'][] = array(
-        'link' => 'logout/', 'txt' => __('Logout'), 'spec' => TRUE
+        'link' => 'logout/', 'txt' => _('Logout'), 'spec' => TRUE
     );
 }
 if (!empty($r['submenu'][0])) {

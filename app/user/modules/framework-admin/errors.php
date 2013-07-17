@@ -1,7 +1,7 @@
 <?php
 
-$app->view->pageTitle = __('System errors');
-echo $app->misc->c_title($app->view->pageTitle, __('You can check here for all errors made by the system.'));
+$app->view->pageTitle = _('System errors');
+echo $app->misc->c_title($app->view->pageTitle, _('You can check here for all errors made by the system.'));
 $pager['html'] = '';
 if (isset($_GET['cmd']) and is_numeric($_GET['cmd'])) {
     $aRes = $myLink->query('SELECT a.id_error,a.errno,a.errstr,a.errfile,a.errline,a.errctx,a.id_usuario,b.nombre_usuario,DATE_FORMAT(a.hora,\'%d-%m-%Y %H:%i:%S\') AS fecha,a.visto,a.reparado,a.nota FROM sist_errores AS a LEFT JOIN usuarios AS b ON a.id_usuario = b.id_usuario WHERE a.id_error = ? LIMIT ?', $_GET['cmd'], 1);

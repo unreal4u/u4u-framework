@@ -11,7 +11,7 @@ $Author: unreal4u $
  */
 
 
-$app->view->pageTitle = __('Roles Modification');
+$app->view->pageTitle = _('Roles Modification');
 ?><h1><?php
 echo $app->view->pageTitle;
 ?></h1><h2>Esta p&aacute;gina sirve para modificar los grupos existentes en el sistema</h2><?php

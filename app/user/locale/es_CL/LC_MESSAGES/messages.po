@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: framework u4u\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-17 01:36+0100\n"
-"PO-Revision-Date: 2013-07-17 01:39+0100\n"
+"POT-Creation-Date: 2013-07-17 03:29+0100\n"
+"PO-Revision-Date: 2013-07-17 03:30+0100\n"
 "Last-Translator: Camilo Sperberg <me@unreal4u.com>\n"
 "Language-Team: unreal4u\n"
 "Language: es_CL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: /home/unreal4u/html/u4u-framework\n"
 
-#: /home/unreal4u/html/u4u-framework/app/validator.php:45
+#: /home/unreal4u/html/u4u-framework/app/validator.php:50
 msgid ""
 "You don't have access to any option in the menu and you just will have "
 "access to the most basic options.<br />If you believe it's a mistake, talk "
@@ -27,11 +27,11 @@ msgstr ""
 "acceso a las opciones más básicas.<br />Si cree que es un error, notifique a "
 "un administrador."
 
-#: /home/unreal4u/html/u4u-framework/app/validator.php:50
+#: /home/unreal4u/html/u4u-framework/app/validator.php:56
 msgid "Home"
 msgstr "Inicio"
 
-#: /home/unreal4u/html/u4u-framework/app/validator.php:60
+#: /home/unreal4u/html/u4u-framework/app/validator.php:66
 msgid "Access denied"
 msgstr "Acceso denegado"
 
@@ -185,17 +185,14 @@ msgstr "Opción actualizada con éxito"
 msgid "Traffic detail per users"
 msgstr "Detalle de tráfico por usuario"
 
-#: /home/unreal4u/html/u4u-framework/app/classes/thirdparty/php-gettext-1.0.11/examples/pigs_dropin.php:77
-msgid ""
-"This is how the story goes.\n"
-"\n"
-msgstr ""
-"Así es como va la historia\n"
-"\n"
-
 #: /home/unreal4u/html/u4u-framework/app/classes/framework/appContainer.class.php:146
-msgid "Time: "
-msgstr "Tiempo: "
+#, php-format
+msgid "Time: %.6f secs"
+msgstr "Tiempo: %.6f segs"
+
+#: /home/unreal4u/html/u4u-framework/app/classes/framework/breadcrump.class.php:26
+msgid "You are at:&nbsp;"
+msgstr "Usted está en:&nbsp;"
 
 #: /home/unreal4u/html/u4u-framework/app/classes/framework/breadcrump.class.php:70
 #, php-format
@@ -223,6 +220,16 @@ msgstr "Contraseña:"
 #: /home/unreal4u/html/u4u-framework/app/cache/smarty/templates_c/ac450cf81a061912c724dd5ec3fbb4846154e76f.file.login.tpl.php:35
 msgid "Accept"
 msgstr "Aceptar"
+
+#~ msgid ""
+#~ "This is how the story goes.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Así es como va la historia\n"
+#~ "\n"
+
+#~ msgid "Time: "
+#~ msgstr "Tiempo: "
 
 #~ msgid "Couldn't load ajax request."
 #~ msgstr "No se pudo cargar el request de Ajax."
