@@ -9,7 +9,6 @@ namespace models;
  * @author Camilo Sperberg
  * @license BSD License. Feel free to use and modify
  */
-
 class users extends \databaseModel {
     const TABLE_NAME = 'sist_users';
 
@@ -26,46 +25,56 @@ class users extends \databaseModel {
 
     public function tryLogin($username='', $password='', $adminOverwrite=false) {
         if (!empty($username)) {
+            $this->login = $username;
+            $this->active = 1;
+
+            $databaseReturnCall = $this->loadByProperties();
+            if (!empty($databaseReturnCall)) {
+                foreach ($databaseReturnCall[0] as $key => $value) {
+                    $this->$key = $value;
+                }
+            }
+
             if ($adminOverwrite === false) {
-                $query = 'SELECT * FROM users WHERE login = ? AND passwd = ?';
-            } else {
-                $query = 'SELECT * FROM users WHERE login = ?';
+                $password = $this->generateEncryptedPassword($password);
+                if ($this->generateEncryptedPassword($password) != $this->passwd) {
+                    $this->_fillDefaultsFields();
+                }
             }
         }
+
+        return $this;
     }
 
     /**
-     * This function generates a password salt as a string of x (default = 15) characters ranging from a-zA-Z0-9.
+     * This function generates a password salt as a string of x characters ranging from CHR(32) until CHR(125).
      *
      * @author AfroSoft <scripts@afrosoft.co.cc>
      * @author Camilo Sperberg - Uses chr(32..125) instead of character list
      *
-     * @param int $max The number of characters in the string
-     * @return string The generated salt
+     * @param int $max The number of characters in the string. Defaults to 32
+     * @return users
      */
-    public function generateSalt($max=32) {
+    protected function _generateSaltHash($max=32) {
         $i = 0;
         $salt = "";
         do {
             $salt .= chr(mt_rand(32, 125));
             $i++;
         } while ($i <= $max);
-        return md5((string)microtime(true) . PASSWD_HASH . $salt);
+
+        return md5((string)microtime(true).PASSWD_HASH.$salt);
     }
 
     /**
      * Generates a secure password from user input
      *
      * @param string $passwd The password user created
-     * @return array The encrypted password and the hash for the password
+     * @return users
      */
-    public function createPassword($passwd) {
-        $passwd = trim(htmlentities($passwd));
-        $hash = $this->generateSalt();
-        return array(
-                'passwd' => md5(substr($passwd, 0, round(strlen($passwd) / 2)) . $hash . substr($passwd, round(strlen($passwd) / 2))),
-                'hash' => $hash,
-        );
+    public function generateEncryptedPassword($passwd) {
+        $hash = $this->_generateSaltHash(32);
+        return md5(substr($passwd, 0, round(strlen($passwd) / 2)).$hash.substr($passwd, round(strlen($passwd) / 2)));
     }
 }
 

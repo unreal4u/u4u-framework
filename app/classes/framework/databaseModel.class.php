@@ -13,7 +13,7 @@ class fieldNotExistsException extends \Exception {}
  * @author $Author$
  * @license BSD License. Feel free to use and modify
  */
-abstract class databaseModel extends \queryHandler {
+abstract class databaseModel extends \queryConstructor {
     /**
      * Holds the current table name
      *
@@ -64,7 +64,7 @@ abstract class databaseModel extends \queryHandler {
     public function __construct() {
         $this->_fillBasics();
         // 99% of the time we won't need these fields, so unset them immediatly
-        unset($this->_fields, $this->fields, $this->_initialData);
+        unset($this->fields, $this->_initialData);
     }
 
     /**
@@ -114,7 +114,7 @@ abstract class databaseModel extends \queryHandler {
     /**
      * Fills in all fields of the object with the object's default values
      */
-    private function _fillDefaultsFields() {
+    protected function _fillDefaultsFields() {
         foreach($this->_fields AS $field => $value) {
             if (!isset($value['DEFAULT'])) {
                 $value['DEFAULT'] = null;
@@ -123,56 +123,6 @@ abstract class databaseModel extends \queryHandler {
         }
 
         return true;
-    }
-
-    /**
-     * Constructs the query
-     *
-     * @param boolean $autoUpdate Whether to append ON DUPLICATE KEY UPDATE string or not. Defaults to "false"
-     */
-    private function _constructQuery($autoUpdate=false) {
-        $return = array();
-
-        $query  = 'INSERT INTO `'.$this->_tableName.'` (';
-        $values = '';
-        $duplicate = '';
-        $returnValues1 = $returnValues2 = array();
-
-        /*
-         * Ideal case scenario, but will have to rewrite db_mysqli class for this to use PDO:
-         */
-        /*
-        foreach ($this->databaseFields as $field => $value) {
-            $return[':'.$field] = $value;
-            $query  .= '`'.$field.'`,';
-            $values .= ':'.$field.',';
-            $duplicate .= '`'.$field.'`=:'.$field.',';
-        }
-        */
-        foreach ($this->databaseFields as $field => $value) {
-            $returnValues1[] = $value;
-            $query .= '`'.$field.'`,';
-            $values .= '?,';
-            if ($autoUpdate === true) {
-                $duplicate .= '`'.$field.'`=?,';
-                $returnValues2[] = $value;
-            }
-        }
-
-
-        $return[0] = substr($query, 0, -1).') VALUES ('.substr($values, 0, -1).')';
-        foreach($returnValues1 AS $returnValue) {
-            $return[] = $returnValue;
-        }
-
-        if ($autoUpdate === true) {
-            $return[0] .= ' ON DUPLICATE KEY UPDATE '.substr($duplicate, 0, -1);
-            foreach($returnValues2 as $returnValue) {
-                $return[] = $returnValue;
-            }
-        }
-
-        return $return;
     }
 
     /**
@@ -238,45 +188,22 @@ abstract class databaseModel extends \queryHandler {
     }
 
     /**
-     * Creates or edits an LIMIT statement. Deals with unclean data.
-     *
-     * Valid limit and offsets for MySQL are positive integers. So, if a float comes in, this function will round it. If
-     * a negative number is entered, it will be ignored, as it will be if we enter a string instead of a numeric
-     * character. Also, if we want to insert an offset, we MUST have a limit.
-     *
-     * @param int $amount The limit we want to rescue. No default value
-     * @param int $offset The offset we want to begin from. Default value: 0
-     * @return string Returns a formatted string according to input
+     * Loads all objects that fits all defined databaseFields
      */
-    public function fixLimit($amount=null, $offset=0) {
-        $return = '';
+    public function loadByProperties() {
+        $i = 0;
+        $finalQuery[] = '';
 
-        if (is_numeric($amount) && $amount >= 0) {
-            $return = ' LIMIT '.round($amount);
-
-            // An offset REQUIRES a limit set, so check only if a limit is set
-            if (is_numeric($offset) && !empty($offset) && $offset >= 0) {
-                $return .= ' OFFSET '.round($offset);
+        $where = '';
+        foreach ($this->databaseFields as $key => $value) {
+            if (!empty($value)) {
+                $where = $this->_constructWhere($where, $key);
+                $finalQuery[] = $value;
             }
         }
 
-        return $return;
-    }
-
-    /**
-     * Returns objects
-     *
-     * @param array $dataFields
-     * @param array $data
-     */
-    public function loadByProperties(array $dataFields=array(), array $data=array()) {
-        $i = 0;
-        $where = '';
-        foreach ($dataFields as $dataField) {
-            $where .= $this->constructWhere($dataField, $data[$i]);
-        }
-
-        $query = 'SELECT *'.$where;
+        $finalQuery[0] = 'SELECT * FROM '.$this->_tableName.' '.$where;
+        return call_user_func_array(array($this, 'query'), $finalQuery);
     }
 
     /**
@@ -285,7 +212,7 @@ abstract class databaseModel extends \queryHandler {
      * @param boolean $autoUpdate Whether to append ON DUPLICATE KEY UPDATE string or not. Defaults to "false"
      * @return boolean Returns true on success save, false otherwise
      */
-    public function save($autoUpdate=false) {
-        return call_user_func_array(array($this, "query"), $this->_constructQuery($autoUpdate));
+    public function save($autoUpdate=true) {
+        return call_user_func_array(array($this, "query"), $this->_constructInsert($this->_tableName, $autoUpdate));
     }
 }

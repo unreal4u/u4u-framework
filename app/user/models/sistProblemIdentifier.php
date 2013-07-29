@@ -5,13 +5,10 @@ namespace models;
 /**
  * Module description
  *
- * @package General
- * @version $Rev$
- * @copyright $Date$
- * @author $Author$
+ * @package Models
+ * @author Camilo Sperberg
  * @license BSD License. Feel free to use and modify
  */
-
 class sistProblemIdentifier extends \databaseModel {
     const TABLE_NAME = 'sist_problemIdentifier';
 
@@ -26,9 +23,9 @@ class sistProblemIdentifier extends \databaseModel {
      *
      * @param string $type
      * @param number $message
-     * @return boolean
+     * @return boolean Returns true if object could be saved, false otherwise
      */
-    public function addProblem($type='', $message=3) {
+    public function addProblem($type, $message) {
         $this->type = $type;
         $this->message = $message;
         return $this->save();

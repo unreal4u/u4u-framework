@@ -11,8 +11,8 @@ class controller_index extends controller {
         $this->pageTitle = _('Main index');
         $this->assign('mySpecialVar', _('This is an assigned variable from PHP!'));
 
-        //$sistProblemIdentifier = new models\sistProblemIdentifier();
-        //$sistProblemIdentifier->addProblem('This is a problem!... '.mt_rand(0, 1000), 4);
+        $sistProblemIdentifier = new models\sistProblemIdentifier();
+        $sistProblemIdentifier->addProblem('CUSTOM_ERROR', 'This is a problem type: "'.mt_rand(0, 1000).'"');
 
         return true;
     }
@@ -28,12 +28,14 @@ class controller_index extends controller {
         $this->bc->add($this->createUrlFromController(), _('Login'));
 
         if (!empty($_POST['loginUsername']) && !empty($_POST['loginPassword'])) {
-            $oUser = new models\user();
+            $oUser = new models\users();
             $user = $oUser->tryLogin($_POST['loginUsername'], $_POST['loginPassword']);
-            if ($user->id > 0) {
+            if ($user->id_user > 0) {
                 // Logged in!
+                debug('You are now logged in!');
             } else {
                 // Not login, add msg
+                debug('Not logged in!');
             }
         }
 
