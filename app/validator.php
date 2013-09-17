@@ -1,17 +1,18 @@
 <?php
-/*
+/**
  * The heart of the system, it does a lot of things, among:
  *
  * <ul><li>Load the basic environment</li>
  * <li>Check for permissions</li>
  * <li>Creates the session</li>
  * <li>Creates several objects such as database, messages, CSS, etc</li>
+ * <li>Sets the base directory</li></ul>
  *
  * Author: Camilo Sperberg - http://unreal4u.com/
  */
 
 chdir(dirname(__FILE__));
-include(rtrim(dirname(__FILE__), '/').'/classes/framework/appContainer.class.php');
+include 'classes/framework/appContainer.class.php';
 
 // Create the $app object
 $app = new appContainer();
